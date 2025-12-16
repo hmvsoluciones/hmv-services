@@ -1,0 +1,23 @@
+<template>
+  <div id="app">
+    <ribbon></ribbon>
+    <div id="app-header">
+      <jhi-navbar @toggle-sidebar="toggleSidebar"></jhi-navbar>
+    </div>
+    <div class="container-fluid">
+      <div class="card jh-card">
+        <router-view></router-view>
+      </div>
+      <b-modal id="login-page" v-model="loginModalOpen" hide-footer lazy>
+        <template #modal-title>
+          <span data-cy="loginTitle" id="login-title">Iniciar la sesión</span>
+        </template>
+        <login-form></login-form>
+      </b-modal>
+      <jhi-footer></jhi-footer>
+    </div>
+    <sidebar-component :visible="sidebarVisible" @update:visible="sidebarVisible = $event" />
+  </div>
+</template>
+
+<script lang="ts" src="./app.component.ts"></script>
