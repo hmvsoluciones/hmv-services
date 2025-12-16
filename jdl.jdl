@@ -12,7 +12,6 @@ entity Cita {
   horaInicio LocalTime required,
   duracionMinutos Integer min(0) max(1000),
   descripcion String required maxlength(200),
-  costo BigDecimal required min(0),
   esUrgente Boolean,
   estadoCita EstadoCita
 }
