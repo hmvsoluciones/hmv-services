@@ -1,0 +1,83 @@
+entity Cliente {
+  nombre String required maxlength(100),
+  celular String required maxlength(30),
+  correo String maxlength(256),
+  identificacion String maxlength(30),
+  direccion String maxlength(150),
+  activo Boolean
+}
+
+entity Cita {
+  fecha LocalDate required,
+  horaInicio LocalTime required,
+  horaFin LocalTime,
+  descripcion String required maxlength(200),
+  costo BigDecimal required,
+  duracionMinutos Integer min(5) max(480),
+  esUrgente Boolean,
+  estadoCita EstadoCita
+}
+
+enum EstadoCita {
+  PROGRAMADA,
+  CONFIRMADA,
+  EN_PROCESO,
+  TERMINADA,
+  CANCELADA,
+  NO_LLEGO,
+  IMPREVISTO
+}
+
+entity Servicio {
+  fechaAtencion Instant required,
+  precio BigDecimal
+}
+
+entity Template {
+  nombre String required maxlength(100),
+  contenidoMarkdown String required maxlength(4000),
+  variables String maxlength(200),
+  esPredeterminado Boolean,
+  vistas Integer,
+  activo Boolean
+}
+
+
+entity Negocio {
+  nombre String required maxlength(150),	
+  responsable String required maxlength(150),
+  celular String maxlength(30),
+  correo String maxlength(256),
+  subscriptionKey String required,
+  limiteCitas Integer,
+  esActivo Boolean,
+}
+
+entity Empleado {
+  nombre String required maxlength(150),
+  celular String maxlength(30),
+  especialidad String maxlength(100),
+  colorHex String maxlength(7),
+  activo Boolean
+}
+
+relationship ManyToOne {
+  Cita{cliente required} to Cliente,
+  Cita{empleado} to Empleado
+}
+
+relationship OneToOne {
+  Servicio{cita required} to Cita
+}
+
+// Configuraciones JHipster
+paginate Cita, Cliente, Empleado with pagination
+paginate Template, Negocio with infinite-scroll
+
+service all with serviceClass
+dto all with mapstruct
+
+filter Cliente
+filter Cita
+filter Template
+filter Negocio
