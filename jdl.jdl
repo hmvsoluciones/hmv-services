@@ -35,7 +35,6 @@ entity Servicio {
 entity Template {
   nombre String required maxlength(100),
   contenidoMarkdown String required,
-  variables String maxlength(200),
   activo Boolean
 }
 

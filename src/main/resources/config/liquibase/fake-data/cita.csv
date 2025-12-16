@@ -1,0 +1,11 @@
+id;fecha;hora_inicio;duracion_minutos;descripcion;es_urgente;estado_cita;cliente_id
+1;2025-12-16;17:59:00;561;bah programme wherever;false;CONFIRMADA;1
+2;2025-12-16;07:54:00;682;igloo;false;CANCELADA;2
+3;2025-12-16;07:46:00;772;schnitzel scratchy;true;CANCELADA;3
+4;2025-12-16;00:20:00;815;ugh;true;CANCELADA;4
+5;2025-12-16;08:32:00;230;knife unless;true;CONFIRMADA;5
+6;2025-12-16;11:59:00;798;owlishly beyond;true;PROGRAMADA;6
+7;2025-12-16;15:18:00;46;uncover hence gadzooks;false;PROGRAMADA;7
+8;2025-12-16;06:09:00;603;yellowish which greedily;true;NO_LLEGO;8
+9;2025-12-16;16:11:00;885;timely ferociously;true;NO_LLEGO;9
+10;2025-12-16;04:30:00;796;superior woot hmph;true;PROGRAMADA;10
