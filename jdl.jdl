@@ -10,10 +10,9 @@ entity Cliente {
 entity Cita {
   fecha LocalDate required,
   horaInicio LocalTime required,
-  horaFin LocalTime,
+  duracionMinutos Integer min(0) max(1000),
   descripcion String required maxlength(200),
-  costo BigDecimal required,
-  duracionMinutos Integer min(5) max(480),
+  costo BigDecimal required min(0),
   esUrgente Boolean,
   estadoCita EstadoCita
 }
@@ -30,15 +29,14 @@ enum EstadoCita {
 
 entity Servicio {
   fechaAtencion Instant required,
+  informe String required,
   precio BigDecimal
 }
 
 entity Template {
   nombre String required maxlength(100),
-  contenidoMarkdown String required maxlength(4000),
+  contenidoMarkdown String required,
   variables String maxlength(200),
-  esPredeterminado Boolean,
-  vistas Integer,
   activo Boolean
 }
 
@@ -49,7 +47,6 @@ entity Negocio {
   celular String maxlength(30),
   correo String maxlength(256),
   subscriptionKey String required,
-  limiteCitas Integer,
   esActivo Boolean,
 }
 
@@ -57,7 +54,6 @@ entity Empleado {
   nombre String required maxlength(150),
   celular String maxlength(30),
   especialidad String maxlength(100),
-  colorHex String maxlength(7),
   activo Boolean
 }
 
