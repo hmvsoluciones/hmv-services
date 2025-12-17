@@ -18,12 +18,10 @@ public interface CitaMapper extends EntityMapper<CitaDTO, Cita> {
     CitaDTO toDto(Cita s);
 
     @Named("clienteId")
-    @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     ClienteDTO toDtoClienteId(Cliente cliente);
 
     @Named("empleadoId")
-    @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
     EmpleadoDTO toDtoEmpleadoId(Empleado empleado);
 }

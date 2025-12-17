@@ -73,12 +73,14 @@
             <td>{{ cita.estadoCita }}</td>
             <td>
               <div v-if="cita.cliente">
-                <router-link :to="{ name: 'ClienteView', params: { clienteId: cita.cliente.id } }">{{ cita.cliente.id }}</router-link>
+                <router-link :to="{ name: 'ClienteView', params: { clienteId: cita.cliente.id } }">{{ cita.cliente.nombre }}</router-link>
               </div>
             </td>
             <td>
               <div v-if="cita.empleado">
-                <router-link :to="{ name: 'EmpleadoView', params: { empleadoId: cita.empleado.id } }">{{ cita.empleado.id }}</router-link>
+                <router-link :to="{ name: 'EmpleadoView', params: { empleadoId: cita.empleado.id } }">
+                  {{ cita.empleado.nombre }}
+                </router-link>
               </div>
             </td>
             <td class="text-right">
