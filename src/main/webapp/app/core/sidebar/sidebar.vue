@@ -24,11 +24,11 @@
               <div class="sidebar-group-header">
                 <small class="sidebar-group-title">Navegación</small>
               </div>
-              <button class="nav-link sidebar-nav-item" @click="handleNavigation($event, '/')" exact>
+              <router-link to="/" class="nav-link sidebar-nav-item" @click="closeSidebar" exact>
                 <font-awesome-icon icon="home" class="sidebar-icon" />
                 <span class="sidebar-text">Inicio</span>
-              </button>
-              <button class="nav-link sidebar-nav-item" @click="handleLoginClick" exact>
+              </router-link>
+              <button class="nav-link sidebar-nav-item" v-if="!isAuthenticated" @click="handleLoginClick" exact>
                 <font-awesome-icon icon="sign-in-alt" />
                 <span>Iniciar sesión</span>
               </button>
@@ -42,38 +42,34 @@
                 <font-awesome-icon icon="user" class="sidebar-icon" />
                 <span class="sidebar-text">Clientes</span>
               </router-link>
-              <router-link to="/tipo-producto" class="nav-link sidebar-nav-item" @click="closeSidebar" exact>
-                <font-awesome-icon icon="burn" class="sidebar-icon" />
-                <span class="sidebar-text">Tipos de productos</span>
+              <router-link to="/cita" class="nav-link sidebar-nav-item" @click="closeSidebar" exact>
+                <font-awesome-icon icon="calendar-alt" class="sidebar-icon" />
+                <span class="sidebar-text">Citas</span>
+              </router-link>
+              <router-link to="/empleado" class="nav-link sidebar-nav-item" @click="closeSidebar" exact>
+                <font-awesome-icon icon="users" class="sidebar-icon" />
+                <span class="sidebar-text">Empleados</span>
               </router-link>
             </div>
             <!-- Grupo de Productos-->
             <div class="sidebar-group" v-if="isAuthenticated">
               <div class="sidebar-group-header">
-                <small class="sidebar-group-title">Productos</small>
+                <small class="sidebar-group-title">Servicios</small>
               </div>
-              <router-link to="/producto" class="nav-link sidebar-nav-item" @click="closeSidebar" exact>
-                <font-awesome-icon icon="binoculars" class="sidebar-icon" />
-                <span class="sidebar-text">Productos</span>
-              </router-link>
-              <router-link to="/plan" class="nav-link sidebar-nav-item" @click="closeSidebar" exact>
-                <font-awesome-icon icon="money-bill" class="sidebar-icon" />
-                <span class="sidebar-text">Planes</span>
+              <router-link to="/servicio" class="nav-link sidebar-nav-item" @click="closeSidebar" exact>
+                <font-awesome-icon icon="cog" class="sidebar-icon" />
+                <span class="sidebar-text">Servicios</span>
               </router-link>
             </div>
 
             <!-- Grupo de Suscripciones-->
             <div class="sidebar-group" v-if="isAuthenticated">
               <div class="sidebar-group-header">
-                <small class="sidebar-group-title">Suscripciones</small>
+                <small class="sidebar-group-title">Templates</small>
               </div>
-              <router-link to="/suscripcion" class="nav-link sidebar-nav-item" @click="closeSidebar" exact>
-                <font-awesome-icon icon="binoculars" class="sidebar-icon" />
-                <span class="sidebar-text">Suscripciones</span>
-              </router-link>
-              <router-link to="/pago" class="nav-link sidebar-nav-item" @click="closeSidebar" exact>
-                <font-awesome-icon icon="money-bills" class="sidebar-icon" />
-                <span class="sidebar-text">Pagos</span>
+              <router-link to="/template" class="nav-link sidebar-nav-item" @click="closeSidebar" exact>
+                <font-awesome-icon icon="wrench" class="sidebar-icon" />
+                <span class="sidebar-text">Templates</span>
               </router-link>
             </div>
 
