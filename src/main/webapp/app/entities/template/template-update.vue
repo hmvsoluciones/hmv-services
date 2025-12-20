@@ -26,15 +26,13 @@
           </div>
           <div class="form-group">
             <label class="form-control-label" for="template-contenido">Contenido</label>
-            <textarea
-              class="form-control"
-              name="contenido"
-              id="template-contenido"
-              data-cy="contenido"
-              :class="{ valid: !v$.contenido.$invalid, invalid: v$.contenido.$invalid }"
-              v-model="v$.contenido.$model"
-              required
-            ></textarea>
+            <QuillEditor
+              v-model:content="v$.contenido.$model"
+              content-type="html"
+              :options="quillOptions"
+              theme="snow"
+              style="height: 200px"
+            />
             <div v-if="v$.contenido.$anyDirty && v$.contenido.$invalid">
               <small class="form-text text-danger" v-for="error of v$.contenido.$errors" :key="error.$uid">{{ error.$message }}</small>
             </div>

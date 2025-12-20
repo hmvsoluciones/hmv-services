@@ -52,6 +52,37 @@ export default defineComponent({
       activo: {},
     };
     const v$ = useVuelidate(validationRules, template as any);
+
+    const quillOptions = {
+      modules: {
+        toolbar: [
+          [{ font: [] }],
+          [{ size: ['small', false, 'large', 'huge'] }],
+
+          ['bold', 'italic', 'underline', 'strike'],
+
+          [{ color: [] }, { background: [] }],
+
+          [{ script: 'sub' }, { script: 'super' }],
+
+          [{ header: 1 }, { header: 2 }, { header: 3 }, { header: 4 }, { header: 5 }, { header: 6 }],
+
+          [{ list: 'ordered' }, { list: 'bullet' }, { list: 'check' }],
+
+          [{ indent: '-1' }, { indent: '+1' }],
+
+          [{ align: [] }],
+
+          ['blockquote', 'code-block'],
+
+          ['link', 'image', 'video'],
+
+          ['clean'],
+
+          ['table'], // custom (HTML)
+        ],
+      },
+    };
     v$.value.$validate();
 
     return {
@@ -62,6 +93,7 @@ export default defineComponent({
       isSaving,
       currentLanguage,
       ...dataUtils,
+      quillOptions,
       v$,
     };
   },
