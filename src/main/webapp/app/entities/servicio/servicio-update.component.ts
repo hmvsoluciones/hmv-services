@@ -3,6 +3,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
 import ServicioService from './servicio.service';
+import useDataUtils from '@/shared/data/data-utils.service';
 import { useDateFormat, useValidation } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
@@ -54,12 +55,14 @@ export default defineComponent({
 
     initRelationships();
 
+    const dataUtils = useDataUtils();
+
     const validations = useValidation();
     const validationRules = {
       fechaAtencion: {
         required: validations.required('Este campo es obligatorio.'),
       },
-      informe: {
+      contenido: {
         required: validations.required('Este campo es obligatorio.'),
       },
       precio: {},
@@ -78,6 +81,7 @@ export default defineComponent({
       isSaving,
       currentLanguage,
       citas,
+      ...dataUtils,
       v$,
       ...useDateFormat({ entityRef: servicio }),
     };

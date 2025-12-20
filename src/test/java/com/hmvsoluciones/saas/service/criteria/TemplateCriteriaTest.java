@@ -77,8 +77,6 @@ class TemplateCriteriaTest {
     private static void setAllFilters(TemplateCriteria templateCriteria) {
         templateCriteria.id();
         templateCriteria.nombre();
-        templateCriteria.contenidoMarkdown();
-        templateCriteria.variables();
         templateCriteria.activo();
         templateCriteria.distinct();
     }
@@ -88,8 +86,6 @@ class TemplateCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId()) &&
                 condition.apply(criteria.getNombre()) &&
-                condition.apply(criteria.getContenidoMarkdown()) &&
-                condition.apply(criteria.getVariables()) &&
                 condition.apply(criteria.getActivo()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
@@ -101,8 +97,6 @@ class TemplateCriteriaTest {
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
                 condition.apply(criteria.getNombre(), copy.getNombre()) &&
-                condition.apply(criteria.getContenidoMarkdown(), copy.getContenidoMarkdown()) &&
-                condition.apply(criteria.getVariables(), copy.getVariables()) &&
                 condition.apply(criteria.getActivo(), copy.getActivo()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"

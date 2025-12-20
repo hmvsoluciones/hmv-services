@@ -1,8 +1,8 @@
 package com.hmvsoluciones.saas.service.dto;
 
-import com.hmvsoluciones.saas.domain.AbstractAuditingEntity;
 import com.hmvsoluciones.saas.domain.enumeration.EstadoCita;
 import jakarta.validation.constraints.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Objects;
@@ -11,7 +11,7 @@ import java.util.Objects;
  * A DTO for the {@link com.hmvsoluciones.saas.domain.Cita} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class CitaDTO extends AbstractAuditingEntity<Long> {
+public class CitaDTO implements Serializable {
 
     private Long id;
 

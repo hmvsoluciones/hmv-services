@@ -11,16 +11,10 @@
             <span>{{ template.nombre }}</span>
           </dd>
           <dt>
-            <span>Contenido Markdown</span>
+            <span>Contenido</span>
           </dt>
           <dd>
-            <span>{{ template.contenidoMarkdown }}</span>
-          </dd>
-          <dt>
-            <span>Variables</span>
-          </dt>
-          <dd>
-            <span>{{ template.variables }}</span>
+            <span>{{ template.contenido }}</span>
           </dd>
           <dt>
             <span>Activo</span>

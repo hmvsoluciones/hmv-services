@@ -11,10 +11,10 @@
             <span v-if="servicio.fechaAtencion">{{ formatDateLong(servicio.fechaAtencion) }}</span>
           </dd>
           <dt>
-            <span>Informe</span>
+            <span>Contenido</span>
           </dt>
           <dd>
-            <span>{{ servicio.informe }}</span>
+            <span>{{ servicio.contenido }}</span>
           </dd>
           <dt>
             <span>Precio</span>

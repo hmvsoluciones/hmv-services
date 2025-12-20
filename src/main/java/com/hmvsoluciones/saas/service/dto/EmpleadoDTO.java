@@ -1,14 +1,14 @@
 package com.hmvsoluciones.saas.service.dto;
 
-import com.hmvsoluciones.saas.domain.AbstractAuditingEntity;
 import jakarta.validation.constraints.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A DTO for the {@link com.hmvsoluciones.saas.domain.Empleado} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class EmpleadoDTO extends AbstractAuditingEntity<Long> {
+public class EmpleadoDTO implements Serializable {
 
     private Long id;
 

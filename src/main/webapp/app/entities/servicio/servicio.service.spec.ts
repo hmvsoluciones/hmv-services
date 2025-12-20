@@ -79,7 +79,7 @@ describe('Service Tests', () => {
       it('should update a Servicio', async () => {
         const returnedFromService = {
           fechaAtencion: dayjs(currentDate).format(DATE_TIME_FORMAT),
-          informe: 'BBBBBB',
+          contenido: 'BBBBBB',
           precio: 1,
           ...elemDefault,
         };
@@ -104,7 +104,7 @@ describe('Service Tests', () => {
       });
 
       it('should partial update a Servicio', async () => {
-        const patchObject = { informe: 'BBBBBB', ...new Servicio() };
+        const patchObject = { contenido: 'BBBBBB', ...new Servicio() };
         const returnedFromService = Object.assign(patchObject, elemDefault);
 
         const expected = { fechaAtencion: currentDate, ...returnedFromService };
@@ -129,7 +129,7 @@ describe('Service Tests', () => {
       it('should return a list of Servicio', async () => {
         const returnedFromService = {
           fechaAtencion: dayjs(currentDate).format(DATE_TIME_FORMAT),
-          informe: 'BBBBBB',
+          contenido: 'BBBBBB',
           precio: 1,
           ...elemDefault,
         };

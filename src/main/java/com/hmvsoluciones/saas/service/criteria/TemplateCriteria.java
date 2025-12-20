@@ -26,10 +26,6 @@ public class TemplateCriteria implements Serializable, Criteria {
 
     private StringFilter nombre;
 
-    private StringFilter contenidoMarkdown;
-
-    private StringFilter variables;
-
     private BooleanFilter activo;
 
     private Boolean distinct;
@@ -39,8 +35,6 @@ public class TemplateCriteria implements Serializable, Criteria {
     public TemplateCriteria(TemplateCriteria other) {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
         this.nombre = other.optionalNombre().map(StringFilter::copy).orElse(null);
-        this.contenidoMarkdown = other.optionalContenidoMarkdown().map(StringFilter::copy).orElse(null);
-        this.variables = other.optionalVariables().map(StringFilter::copy).orElse(null);
         this.activo = other.optionalActivo().map(BooleanFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
@@ -86,44 +80,6 @@ public class TemplateCriteria implements Serializable, Criteria {
 
     public void setNombre(StringFilter nombre) {
         this.nombre = nombre;
-    }
-
-    public StringFilter getContenidoMarkdown() {
-        return contenidoMarkdown;
-    }
-
-    public Optional<StringFilter> optionalContenidoMarkdown() {
-        return Optional.ofNullable(contenidoMarkdown);
-    }
-
-    public StringFilter contenidoMarkdown() {
-        if (contenidoMarkdown == null) {
-            setContenidoMarkdown(new StringFilter());
-        }
-        return contenidoMarkdown;
-    }
-
-    public void setContenidoMarkdown(StringFilter contenidoMarkdown) {
-        this.contenidoMarkdown = contenidoMarkdown;
-    }
-
-    public StringFilter getVariables() {
-        return variables;
-    }
-
-    public Optional<StringFilter> optionalVariables() {
-        return Optional.ofNullable(variables);
-    }
-
-    public StringFilter variables() {
-        if (variables == null) {
-            setVariables(new StringFilter());
-        }
-        return variables;
-    }
-
-    public void setVariables(StringFilter variables) {
-        this.variables = variables;
     }
 
     public BooleanFilter getActivo() {
@@ -176,8 +132,6 @@ public class TemplateCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(nombre, that.nombre) &&
-            Objects.equals(contenidoMarkdown, that.contenidoMarkdown) &&
-            Objects.equals(variables, that.variables) &&
             Objects.equals(activo, that.activo) &&
             Objects.equals(distinct, that.distinct)
         );
@@ -185,7 +139,7 @@ public class TemplateCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, nombre, contenidoMarkdown, variables, activo, distinct);
+        return Objects.hash(id, nombre, activo, distinct);
     }
 
     // prettier-ignore
@@ -194,8 +148,6 @@ public class TemplateCriteria implements Serializable, Criteria {
         return "TemplateCriteria{" +
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
             optionalNombre().map(f -> "nombre=" + f + ", ").orElse("") +
-            optionalContenidoMarkdown().map(f -> "contenidoMarkdown=" + f + ", ").orElse("") +
-            optionalVariables().map(f -> "variables=" + f + ", ").orElse("") +
             optionalActivo().map(f -> "activo=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";

@@ -3,6 +3,7 @@ package com.hmvsoluciones.saas.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.Instant;
 
@@ -12,7 +13,7 @@ import java.time.Instant;
 @Entity
 @Table(name = "servicio")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Servicio extends AbstractAuditingEntity<Long> {
+public class Servicio implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -26,9 +27,9 @@ public class Servicio extends AbstractAuditingEntity<Long> {
     @Column(name = "fecha_atencion", nullable = false)
     private Instant fechaAtencion;
 
-    @NotNull
-    @Column(name = "informe", nullable = false)
-    private String informe;
+    @Lob
+    @Column(name = "contenido", nullable = false)
+    private String contenido;
 
     @Column(name = "precio", precision = 21, scale = 2)
     private BigDecimal precio;
@@ -67,17 +68,17 @@ public class Servicio extends AbstractAuditingEntity<Long> {
         this.fechaAtencion = fechaAtencion;
     }
 
-    public String getInforme() {
-        return this.informe;
+    public String getContenido() {
+        return this.contenido;
     }
 
-    public Servicio informe(String informe) {
-        this.setInforme(informe);
+    public Servicio contenido(String contenido) {
+        this.setContenido(contenido);
         return this;
     }
 
-    public void setInforme(String informe) {
-        this.informe = informe;
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
     }
 
     public BigDecimal getPrecio() {
@@ -131,7 +132,7 @@ public class Servicio extends AbstractAuditingEntity<Long> {
         return "Servicio{" +
             "id=" + getId() +
             ", fechaAtencion='" + getFechaAtencion() + "'" +
-            ", informe='" + getInforme() + "'" +
+            ", contenido='" + getContenido() + "'" +
             ", precio=" + getPrecio() +
             "}";
     }

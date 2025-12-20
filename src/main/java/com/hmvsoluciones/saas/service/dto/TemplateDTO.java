@@ -1,14 +1,15 @@
 package com.hmvsoluciones.saas.service.dto;
 
-import com.hmvsoluciones.saas.domain.AbstractAuditingEntity;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
+import java.io.Serializable;
 import java.util.Objects;
 
 /**
  * A DTO for the {@link com.hmvsoluciones.saas.domain.Template} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class TemplateDTO extends AbstractAuditingEntity<Long> {
+public class TemplateDTO implements Serializable {
 
     private Long id;
 
@@ -16,11 +17,8 @@ public class TemplateDTO extends AbstractAuditingEntity<Long> {
     @Size(max = 100)
     private String nombre;
 
-    @NotNull
-    private String contenidoMarkdown;
-
-    @Size(max = 200)
-    private String variables;
+    @Lob
+    private String contenido;
 
     private Boolean activo;
 
@@ -40,20 +38,12 @@ public class TemplateDTO extends AbstractAuditingEntity<Long> {
         this.nombre = nombre;
     }
 
-    public String getContenidoMarkdown() {
-        return contenidoMarkdown;
+    public String getContenido() {
+        return contenido;
     }
 
-    public void setContenidoMarkdown(String contenidoMarkdown) {
-        this.contenidoMarkdown = contenidoMarkdown;
-    }
-
-    public String getVariables() {
-        return variables;
-    }
-
-    public void setVariables(String variables) {
-        this.variables = variables;
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
     }
 
     public Boolean getActivo() {
@@ -91,8 +81,7 @@ public class TemplateDTO extends AbstractAuditingEntity<Long> {
         return "TemplateDTO{" +
             "id=" + getId() +
             ", nombre='" + getNombre() + "'" +
-            ", contenidoMarkdown='" + getContenidoMarkdown() + "'" +
-            ", variables='" + getVariables() + "'" +
+            ", contenido='" + getContenido() + "'" +
             ", activo='" + getActivo() + "'" +
             "}";
     }

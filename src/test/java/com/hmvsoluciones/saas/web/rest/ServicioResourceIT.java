@@ -42,8 +42,8 @@ class ServicioResourceIT {
     private static final Instant DEFAULT_FECHA_ATENCION = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_FECHA_ATENCION = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
-    private static final String DEFAULT_INFORME = "AAAAAAAAAA";
-    private static final String UPDATED_INFORME = "BBBBBBBBBB";
+    private static final String DEFAULT_CONTENIDO = "AAAAAAAAAA";
+    private static final String UPDATED_CONTENIDO = "BBBBBBBBBB";
 
     private static final BigDecimal DEFAULT_PRECIO = new BigDecimal(1);
     private static final BigDecimal UPDATED_PRECIO = new BigDecimal(2);
@@ -80,7 +80,7 @@ class ServicioResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Servicio createEntity(EntityManager em) {
-        Servicio servicio = new Servicio().fechaAtencion(DEFAULT_FECHA_ATENCION).informe(DEFAULT_INFORME).precio(DEFAULT_PRECIO);
+        Servicio servicio = new Servicio().fechaAtencion(DEFAULT_FECHA_ATENCION).contenido(DEFAULT_CONTENIDO).precio(DEFAULT_PRECIO);
         // Add required entity
         Cita cita;
         if (TestUtil.findAll(em, Cita.class).isEmpty()) {
@@ -101,7 +101,7 @@ class ServicioResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Servicio createUpdatedEntity(EntityManager em) {
-        Servicio updatedServicio = new Servicio().fechaAtencion(UPDATED_FECHA_ATENCION).informe(UPDATED_INFORME).precio(UPDATED_PRECIO);
+        Servicio updatedServicio = new Servicio().fechaAtencion(UPDATED_FECHA_ATENCION).contenido(UPDATED_CONTENIDO).precio(UPDATED_PRECIO);
         // Add required entity
         Cita cita;
         if (TestUtil.findAll(em, Cita.class).isEmpty()) {
@@ -189,23 +189,6 @@ class ServicioResourceIT {
 
     @Test
     @Transactional
-    void checkInformeIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        servicio.setInforme(null);
-
-        // Create the Servicio, which fails.
-        ServicioDTO servicioDTO = servicioMapper.toDto(servicio);
-
-        restServicioMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(servicioDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllServicios() throws Exception {
         // Initialize the database
         insertedServicio = servicioRepository.saveAndFlush(servicio);
@@ -217,7 +200,7 @@ class ServicioResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(servicio.getId().intValue())))
             .andExpect(jsonPath("$.[*].fechaAtencion").value(hasItem(DEFAULT_FECHA_ATENCION.toString())))
-            .andExpect(jsonPath("$.[*].informe").value(hasItem(DEFAULT_INFORME)))
+            .andExpect(jsonPath("$.[*].contenido").value(hasItem(DEFAULT_CONTENIDO)))
             .andExpect(jsonPath("$.[*].precio").value(hasItem(sameNumber(DEFAULT_PRECIO))));
     }
 
@@ -234,7 +217,7 @@ class ServicioResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(servicio.getId().intValue()))
             .andExpect(jsonPath("$.fechaAtencion").value(DEFAULT_FECHA_ATENCION.toString()))
-            .andExpect(jsonPath("$.informe").value(DEFAULT_INFORME))
+            .andExpect(jsonPath("$.contenido").value(DEFAULT_CONTENIDO))
             .andExpect(jsonPath("$.precio").value(sameNumber(DEFAULT_PRECIO)));
     }
 
@@ -257,7 +240,7 @@ class ServicioResourceIT {
         Servicio updatedServicio = servicioRepository.findById(servicio.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedServicio are not directly saved in db
         em.detach(updatedServicio);
-        updatedServicio.fechaAtencion(UPDATED_FECHA_ATENCION).informe(UPDATED_INFORME).precio(UPDATED_PRECIO);
+        updatedServicio.fechaAtencion(UPDATED_FECHA_ATENCION).contenido(UPDATED_CONTENIDO).precio(UPDATED_PRECIO);
         ServicioDTO servicioDTO = servicioMapper.toDto(updatedServicio);
 
         restServicioMockMvc
@@ -375,7 +358,7 @@ class ServicioResourceIT {
         Servicio partialUpdatedServicio = new Servicio();
         partialUpdatedServicio.setId(servicio.getId());
 
-        partialUpdatedServicio.fechaAtencion(UPDATED_FECHA_ATENCION).informe(UPDATED_INFORME).precio(UPDATED_PRECIO);
+        partialUpdatedServicio.fechaAtencion(UPDATED_FECHA_ATENCION).contenido(UPDATED_CONTENIDO).precio(UPDATED_PRECIO);
 
         restServicioMockMvc
             .perform(

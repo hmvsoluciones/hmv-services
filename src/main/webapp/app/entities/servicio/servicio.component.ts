@@ -2,6 +2,7 @@ import { type Ref, defineComponent, inject, onMounted, ref } from 'vue';
 
 import ServicioService from './servicio.service';
 import { type IServicio } from '@/shared/model/servicio.model';
+import useDataUtils from '@/shared/data/data-utils.service';
 import { useDateFormat } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
@@ -10,6 +11,7 @@ export default defineComponent({
   name: 'Servicio',
   setup() {
     const dateFormat = useDateFormat();
+    const dataUtils = useDataUtils();
     const servicioService = inject('servicioService', () => new ServicioService());
     const alertService = inject('alertService', () => useAlertService(), true);
 
@@ -73,6 +75,7 @@ export default defineComponent({
       prepareRemove,
       closeDialog,
       removeServicio,
+      ...dataUtils,
     };
   },
 });

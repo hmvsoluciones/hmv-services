@@ -25,36 +25,18 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="template-contenidoMarkdown">Contenido Markdown</label>
-            <input
-              type="text"
+            <label class="form-control-label" for="template-contenido">Contenido</label>
+            <textarea
               class="form-control"
-              name="contenidoMarkdown"
-              id="template-contenidoMarkdown"
-              data-cy="contenidoMarkdown"
-              :class="{ valid: !v$.contenidoMarkdown.$invalid, invalid: v$.contenidoMarkdown.$invalid }"
-              v-model="v$.contenidoMarkdown.$model"
+              name="contenido"
+              id="template-contenido"
+              data-cy="contenido"
+              :class="{ valid: !v$.contenido.$invalid, invalid: v$.contenido.$invalid }"
+              v-model="v$.contenido.$model"
               required
-            />
-            <div v-if="v$.contenidoMarkdown.$anyDirty && v$.contenidoMarkdown.$invalid">
-              <small class="form-text text-danger" v-for="error of v$.contenidoMarkdown.$errors" :key="error.$uid">{{
-                error.$message
-              }}</small>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="form-control-label" for="template-variables">Variables</label>
-            <input
-              type="text"
-              class="form-control"
-              name="variables"
-              id="template-variables"
-              data-cy="variables"
-              :class="{ valid: !v$.variables.$invalid, invalid: v$.variables.$invalid }"
-              v-model="v$.variables.$model"
-            />
-            <div v-if="v$.variables.$anyDirty && v$.variables.$invalid">
-              <small class="form-text text-danger" v-for="error of v$.variables.$errors" :key="error.$uid">{{ error.$message }}</small>
+            ></textarea>
+            <div v-if="v$.contenido.$anyDirty && v$.contenido.$invalid">
+              <small class="form-text text-danger" v-for="error of v$.contenido.$errors" :key="error.$uid">{{ error.$message }}</small>
             </div>
           </div>
           <div class="form-group">

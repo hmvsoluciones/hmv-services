@@ -37,11 +37,8 @@ class TemplateResourceIT {
     private static final String DEFAULT_NOMBRE = "AAAAAAAAAA";
     private static final String UPDATED_NOMBRE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_CONTENIDO_MARKDOWN = "AAAAAAAAAA";
-    private static final String UPDATED_CONTENIDO_MARKDOWN = "BBBBBBBBBB";
-
-    private static final String DEFAULT_VARIABLES = "AAAAAAAAAA";
-    private static final String UPDATED_VARIABLES = "BBBBBBBBBB";
+    private static final String DEFAULT_CONTENIDO = "AAAAAAAAAA";
+    private static final String UPDATED_CONTENIDO = "BBBBBBBBBB";
 
     private static final Boolean DEFAULT_ACTIVO = false;
     private static final Boolean UPDATED_ACTIVO = true;
@@ -78,11 +75,7 @@ class TemplateResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Template createEntity() {
-        return new Template()
-            .nombre(DEFAULT_NOMBRE)
-            .contenidoMarkdown(DEFAULT_CONTENIDO_MARKDOWN)
-            .variables(DEFAULT_VARIABLES)
-            .activo(DEFAULT_ACTIVO);
+        return new Template().nombre(DEFAULT_NOMBRE).contenido(DEFAULT_CONTENIDO).activo(DEFAULT_ACTIVO);
     }
 
     /**
@@ -92,11 +85,7 @@ class TemplateResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Template createUpdatedEntity() {
-        return new Template()
-            .nombre(UPDATED_NOMBRE)
-            .contenidoMarkdown(UPDATED_CONTENIDO_MARKDOWN)
-            .variables(UPDATED_VARIABLES)
-            .activo(UPDATED_ACTIVO);
+        return new Template().nombre(UPDATED_NOMBRE).contenido(UPDATED_CONTENIDO).activo(UPDATED_ACTIVO);
     }
 
     @BeforeEach
@@ -173,23 +162,6 @@ class TemplateResourceIT {
 
     @Test
     @Transactional
-    void checkContenidoMarkdownIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        template.setContenidoMarkdown(null);
-
-        // Create the Template, which fails.
-        TemplateDTO templateDTO = templateMapper.toDto(template);
-
-        restTemplateMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(templateDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
     void getAllTemplates() throws Exception {
         // Initialize the database
         insertedTemplate = templateRepository.saveAndFlush(template);
@@ -201,8 +173,7 @@ class TemplateResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(template.getId().intValue())))
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
-            .andExpect(jsonPath("$.[*].contenidoMarkdown").value(hasItem(DEFAULT_CONTENIDO_MARKDOWN)))
-            .andExpect(jsonPath("$.[*].variables").value(hasItem(DEFAULT_VARIABLES)))
+            .andExpect(jsonPath("$.[*].contenido").value(hasItem(DEFAULT_CONTENIDO)))
             .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO)));
     }
 
@@ -219,8 +190,7 @@ class TemplateResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(template.getId().intValue()))
             .andExpect(jsonPath("$.nombre").value(DEFAULT_NOMBRE))
-            .andExpect(jsonPath("$.contenidoMarkdown").value(DEFAULT_CONTENIDO_MARKDOWN))
-            .andExpect(jsonPath("$.variables").value(DEFAULT_VARIABLES))
+            .andExpect(jsonPath("$.contenido").value(DEFAULT_CONTENIDO))
             .andExpect(jsonPath("$.activo").value(DEFAULT_ACTIVO));
     }
 
@@ -291,118 +261,6 @@ class TemplateResourceIT {
 
     @Test
     @Transactional
-    void getAllTemplatesByContenidoMarkdownIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedTemplate = templateRepository.saveAndFlush(template);
-
-        // Get all the templateList where contenidoMarkdown equals to
-        defaultTemplateFiltering(
-            "contenidoMarkdown.equals=" + DEFAULT_CONTENIDO_MARKDOWN,
-            "contenidoMarkdown.equals=" + UPDATED_CONTENIDO_MARKDOWN
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllTemplatesByContenidoMarkdownIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedTemplate = templateRepository.saveAndFlush(template);
-
-        // Get all the templateList where contenidoMarkdown in
-        defaultTemplateFiltering(
-            "contenidoMarkdown.in=" + DEFAULT_CONTENIDO_MARKDOWN + "," + UPDATED_CONTENIDO_MARKDOWN,
-            "contenidoMarkdown.in=" + UPDATED_CONTENIDO_MARKDOWN
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllTemplatesByContenidoMarkdownIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedTemplate = templateRepository.saveAndFlush(template);
-
-        // Get all the templateList where contenidoMarkdown is not null
-        defaultTemplateFiltering("contenidoMarkdown.specified=true", "contenidoMarkdown.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllTemplatesByContenidoMarkdownContainsSomething() throws Exception {
-        // Initialize the database
-        insertedTemplate = templateRepository.saveAndFlush(template);
-
-        // Get all the templateList where contenidoMarkdown contains
-        defaultTemplateFiltering(
-            "contenidoMarkdown.contains=" + DEFAULT_CONTENIDO_MARKDOWN,
-            "contenidoMarkdown.contains=" + UPDATED_CONTENIDO_MARKDOWN
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllTemplatesByContenidoMarkdownNotContainsSomething() throws Exception {
-        // Initialize the database
-        insertedTemplate = templateRepository.saveAndFlush(template);
-
-        // Get all the templateList where contenidoMarkdown does not contain
-        defaultTemplateFiltering(
-            "contenidoMarkdown.doesNotContain=" + UPDATED_CONTENIDO_MARKDOWN,
-            "contenidoMarkdown.doesNotContain=" + DEFAULT_CONTENIDO_MARKDOWN
-        );
-    }
-
-    @Test
-    @Transactional
-    void getAllTemplatesByVariablesIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedTemplate = templateRepository.saveAndFlush(template);
-
-        // Get all the templateList where variables equals to
-        defaultTemplateFiltering("variables.equals=" + DEFAULT_VARIABLES, "variables.equals=" + UPDATED_VARIABLES);
-    }
-
-    @Test
-    @Transactional
-    void getAllTemplatesByVariablesIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedTemplate = templateRepository.saveAndFlush(template);
-
-        // Get all the templateList where variables in
-        defaultTemplateFiltering("variables.in=" + DEFAULT_VARIABLES + "," + UPDATED_VARIABLES, "variables.in=" + UPDATED_VARIABLES);
-    }
-
-    @Test
-    @Transactional
-    void getAllTemplatesByVariablesIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedTemplate = templateRepository.saveAndFlush(template);
-
-        // Get all the templateList where variables is not null
-        defaultTemplateFiltering("variables.specified=true", "variables.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllTemplatesByVariablesContainsSomething() throws Exception {
-        // Initialize the database
-        insertedTemplate = templateRepository.saveAndFlush(template);
-
-        // Get all the templateList where variables contains
-        defaultTemplateFiltering("variables.contains=" + DEFAULT_VARIABLES, "variables.contains=" + UPDATED_VARIABLES);
-    }
-
-    @Test
-    @Transactional
-    void getAllTemplatesByVariablesNotContainsSomething() throws Exception {
-        // Initialize the database
-        insertedTemplate = templateRepository.saveAndFlush(template);
-
-        // Get all the templateList where variables does not contain
-        defaultTemplateFiltering("variables.doesNotContain=" + UPDATED_VARIABLES, "variables.doesNotContain=" + DEFAULT_VARIABLES);
-    }
-
-    @Test
-    @Transactional
     void getAllTemplatesByActivoIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedTemplate = templateRepository.saveAndFlush(template);
@@ -446,8 +304,7 @@ class TemplateResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(template.getId().intValue())))
             .andExpect(jsonPath("$.[*].nombre").value(hasItem(DEFAULT_NOMBRE)))
-            .andExpect(jsonPath("$.[*].contenidoMarkdown").value(hasItem(DEFAULT_CONTENIDO_MARKDOWN)))
-            .andExpect(jsonPath("$.[*].variables").value(hasItem(DEFAULT_VARIABLES)))
+            .andExpect(jsonPath("$.[*].contenido").value(hasItem(DEFAULT_CONTENIDO)))
             .andExpect(jsonPath("$.[*].activo").value(hasItem(DEFAULT_ACTIVO)));
 
         // Check, that the count call also returns 1
@@ -496,11 +353,7 @@ class TemplateResourceIT {
         Template updatedTemplate = templateRepository.findById(template.getId()).orElseThrow();
         // Disconnect from session so that the updates on updatedTemplate are not directly saved in db
         em.detach(updatedTemplate);
-        updatedTemplate
-            .nombre(UPDATED_NOMBRE)
-            .contenidoMarkdown(UPDATED_CONTENIDO_MARKDOWN)
-            .variables(UPDATED_VARIABLES)
-            .activo(UPDATED_ACTIVO);
+        updatedTemplate.nombre(UPDATED_NOMBRE).contenido(UPDATED_CONTENIDO).activo(UPDATED_ACTIVO);
         TemplateDTO templateDTO = templateMapper.toDto(updatedTemplate);
 
         restTemplateMockMvc
@@ -590,7 +443,7 @@ class TemplateResourceIT {
         Template partialUpdatedTemplate = new Template();
         partialUpdatedTemplate.setId(template.getId());
 
-        partialUpdatedTemplate.contenidoMarkdown(UPDATED_CONTENIDO_MARKDOWN);
+        partialUpdatedTemplate.contenido(UPDATED_CONTENIDO);
 
         restTemplateMockMvc
             .perform(
@@ -618,11 +471,7 @@ class TemplateResourceIT {
         Template partialUpdatedTemplate = new Template();
         partialUpdatedTemplate.setId(template.getId());
 
-        partialUpdatedTemplate
-            .nombre(UPDATED_NOMBRE)
-            .contenidoMarkdown(UPDATED_CONTENIDO_MARKDOWN)
-            .variables(UPDATED_VARIABLES)
-            .activo(UPDATED_ACTIVO);
+        partialUpdatedTemplate.nombre(UPDATED_NOMBRE).contenido(UPDATED_CONTENIDO).activo(UPDATED_ACTIVO);
 
         restTemplateMockMvc
             .perform(

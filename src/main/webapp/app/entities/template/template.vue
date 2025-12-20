@@ -34,13 +34,9 @@
               <span>Nombre</span>
               <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'nombre'"></jhi-sort-indicator>
             </th>
-            <th scope="row" @click="changeOrder('contenidoMarkdown')">
-              <span>Contenido Markdown</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'contenidoMarkdown'"></jhi-sort-indicator>
-            </th>
-            <th scope="row" @click="changeOrder('variables')">
-              <span>Variables</span>
-              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'variables'"></jhi-sort-indicator>
+            <th scope="row" @click="changeOrder('contenido')">
+              <span>Contenido</span>
+              <jhi-sort-indicator :current-order="propOrder" :reverse="reverse" :field-name="'contenido'"></jhi-sort-indicator>
             </th>
             <th scope="row" @click="changeOrder('activo')">
               <span>Activo</span>
@@ -55,8 +51,7 @@
               <router-link :to="{ name: 'TemplateView', params: { templateId: template.id } }">{{ template.id }}</router-link>
             </td>
             <td>{{ template.nombre }}</td>
-            <td>{{ template.contenidoMarkdown }}</td>
-            <td>{{ template.variables }}</td>
+            <td>{{ template.contenido }}</td>
             <td>{{ template.activo }}</td>
             <td class="text-right">
               <div class="btn-group">

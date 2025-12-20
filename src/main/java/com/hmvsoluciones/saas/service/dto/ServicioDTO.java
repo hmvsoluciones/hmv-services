@@ -1,6 +1,6 @@
 package com.hmvsoluciones.saas.service.dto;
 
-import com.hmvsoluciones.saas.domain.AbstractAuditingEntity;
+import jakarta.persistence.Lob;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -11,15 +11,15 @@ import java.util.Objects;
  * A DTO for the {@link com.hmvsoluciones.saas.domain.Servicio} entity.
  */
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class ServicioDTO extends AbstractAuditingEntity<Long> {
+public class ServicioDTO implements Serializable {
 
     private Long id;
 
     @NotNull
     private Instant fechaAtencion;
 
-    @NotNull
-    private String informe;
+    @Lob
+    private String contenido;
 
     private BigDecimal precio;
 
@@ -42,12 +42,12 @@ public class ServicioDTO extends AbstractAuditingEntity<Long> {
         this.fechaAtencion = fechaAtencion;
     }
 
-    public String getInforme() {
-        return informe;
+    public String getContenido() {
+        return contenido;
     }
 
-    public void setInforme(String informe) {
-        this.informe = informe;
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
     }
 
     public BigDecimal getPrecio() {
@@ -93,7 +93,7 @@ public class ServicioDTO extends AbstractAuditingEntity<Long> {
         return "ServicioDTO{" +
             "id=" + getId() +
             ", fechaAtencion='" + getFechaAtencion() + "'" +
-            ", informe='" + getInforme() + "'" +
+            ", contenido='" + getContenido() + "'" +
             ", precio=" + getPrecio() +
             ", cita=" + getCita() +
             "}";

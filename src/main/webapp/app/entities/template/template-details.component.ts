@@ -2,6 +2,7 @@ import { type Ref, defineComponent, inject, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 
 import TemplateService from './template.service';
+import useDataUtils from '@/shared/data/data-utils.service';
 import { type ITemplate } from '@/shared/model/template.model';
 import { useAlertService } from '@/shared/alert/alert.service';
 
@@ -11,6 +12,8 @@ export default defineComponent({
   setup() {
     const templateService = inject('templateService', () => new TemplateService());
     const alertService = inject('alertService', () => useAlertService(), true);
+
+    const dataUtils = useDataUtils();
 
     const route = useRoute();
     const router = useRouter();
@@ -34,6 +37,8 @@ export default defineComponent({
     return {
       alertService,
       template,
+
+      ...dataUtils,
 
       previousState,
     };

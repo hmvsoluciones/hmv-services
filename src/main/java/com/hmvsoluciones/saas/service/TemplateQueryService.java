@@ -74,8 +74,6 @@ public class TemplateQueryService extends QueryService<Template> {
                 Boolean.TRUE.equals(criteria.getDistinct()) ? distinct(criteria.getDistinct()) : null,
                 buildRangeSpecification(criteria.getId(), Template_.id),
                 buildStringSpecification(criteria.getNombre(), Template_.nombre),
-                buildStringSpecification(criteria.getContenidoMarkdown(), Template_.contenidoMarkdown),
-                buildStringSpecification(criteria.getVariables(), Template_.variables),
                 buildSpecification(criteria.getActivo(), Template_.activo)
             );
         }

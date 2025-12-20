@@ -3,6 +3,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { useVuelidate } from '@vuelidate/core';
 
 import TemplateService from './template.service';
+import useDataUtils from '@/shared/data/data-utils.service';
 import { useValidation } from '@/shared/composables';
 import { useAlertService } from '@/shared/alert/alert.service';
 
@@ -37,17 +38,16 @@ export default defineComponent({
       retrieveTemplate(route.params.templateId);
     }
 
+    const dataUtils = useDataUtils();
+
     const validations = useValidation();
     const validationRules = {
       nombre: {
         required: validations.required('Este campo es obligatorio.'),
         maxLength: validations.maxLength('Este campo no puede superar más de 100 caracteres.', 100),
       },
-      contenidoMarkdown: {
+      contenido: {
         required: validations.required('Este campo es obligatorio.'),
-      },
-      variables: {
-        maxLength: validations.maxLength('Este campo no puede superar más de 200 caracteres.', 200),
       },
       activo: {},
     };
@@ -61,6 +61,7 @@ export default defineComponent({
       previousState,
       isSaving,
       currentLanguage,
+      ...dataUtils,
       v$,
     };
   },

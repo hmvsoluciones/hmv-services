@@ -29,7 +29,7 @@
           <tr>
             <th scope="row"><span>ID</span></th>
             <th scope="row"><span>Fecha Atencion</span></th>
-            <th scope="row"><span>Informe</span></th>
+            <th scope="row"><span>Contenido</span></th>
             <th scope="row"><span>Precio</span></th>
             <th scope="row"><span>Cita</span></th>
             <th scope="row"></th>
@@ -41,7 +41,7 @@
               <router-link :to="{ name: 'ServicioView', params: { servicioId: servicio.id } }">{{ servicio.id }}</router-link>
             </td>
             <td>{{ formatDateShort(servicio.fechaAtencion) || '' }}</td>
-            <td>{{ servicio.informe }}</td>
+            <td>{{ servicio.contenido }}</td>
             <td>{{ servicio.precio }}</td>
             <td>
               <div v-if="servicio.cita">

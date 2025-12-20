@@ -2,6 +2,7 @@ package com.hmvsoluciones.saas.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import java.io.Serializable;
 
 /**
  * A Negocio.
@@ -9,7 +10,7 @@ import jakarta.validation.constraints.*;
 @Entity
 @Table(name = "negocio")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Negocio extends AbstractAuditingEntity<Long> {
+public class Negocio implements Serializable {
 
     private static final long serialVersionUID = 1L;
 

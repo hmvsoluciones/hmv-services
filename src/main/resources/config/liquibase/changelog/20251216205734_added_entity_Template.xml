@@ -17,11 +17,8 @@
             <column name="nombre" type="varchar(100)">
                 <constraints nullable="false" />
             </column>
-            <column name="contenido_markdown" type="varchar(255)">
+            <column name="contenido" type="${clobType}">
                 <constraints nullable="false" />
-            </column>
-            <column name="variables" type="varchar(200)">
-                <constraints nullable="true" />
             </column>
             <column name="activo" type="boolean">
                 <constraints nullable="true" />
@@ -48,22 +45,9 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="nombre" type="string"/>
-            <column name="contenido_markdown" type="string"/>
-            <column name="variables" type="string"/>
+            <column name="contenido" type="clob"/>
             <column name="activo" type="boolean"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
-    </changeSet>
-    <changeSet id="add-auditoria-columns" author="jhipster">
-        <addColumn tableName="template">
-            <column name="created_by" type="varchar(50)">
-                <constraints nullable="false"/>
-            </column>
-            <column name="created_date" type="timestamp">
-                <constraints nullable="false"/>
-            </column>
-            <column name="last_modified_by" type="varchar(50)"/>
-            <column name="last_modified_date" type="timestamp"/>
-        </addColumn>
     </changeSet>
 </databaseChangeLog>

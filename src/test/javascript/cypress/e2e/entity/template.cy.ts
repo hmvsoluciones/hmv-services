@@ -15,7 +15,7 @@ describe('Template e2e test', () => {
   const templatePageUrlPattern = new RegExp('/template(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  const templateSample = { nombre: 'ferociously', contenidoMarkdown: 'waist' };
+  const templateSample = { nombre: 'woot uh-huh meanwhile', contenido: 'Li4vZmFrZS1kYXRhL2Jsb2IvaGlwc3Rlci50eHQ=' };
 
   let template;
 
@@ -160,14 +160,11 @@ describe('Template e2e test', () => {
     });
 
     it('should create an instance of Template', () => {
-      cy.get(`[data-cy="nombre"]`).type('though');
-      cy.get(`[data-cy="nombre"]`).should('have.value', 'though');
+      cy.get(`[data-cy="nombre"]`).type('next who formal');
+      cy.get(`[data-cy="nombre"]`).should('have.value', 'next who formal');
 
-      cy.get(`[data-cy="contenidoMarkdown"]`).type('overdub smoggy broadly');
-      cy.get(`[data-cy="contenidoMarkdown"]`).should('have.value', 'overdub smoggy broadly');
-
-      cy.get(`[data-cy="variables"]`).type('shallow archaeology after');
-      cy.get(`[data-cy="variables"]`).should('have.value', 'shallow archaeology after');
+      cy.get(`[data-cy="contenido"]`).type('../fake-data/blob/hipster.txt');
+      cy.get(`[data-cy="contenido"]`).invoke('val').should('match', new RegExp('../fake-data/blob/hipster.txt'));
 
       cy.get(`[data-cy="activo"]`).should('not.be.checked');
       cy.get(`[data-cy="activo"]`).click();

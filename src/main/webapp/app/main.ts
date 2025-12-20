@@ -14,6 +14,8 @@ import JhiItemCountComponent from '@/shared/jhi-item-count.vue';
 import JhiSortIndicatorComponent from '@/shared/sort/jhi-sort-indicator.vue';
 import { useLoginModal } from '@/account/login-modal';
 import AccountService from '@/account/account.service';
+import { QuillEditor } from '@vueup/vue-quill';
+import '@vueup/vue-quill/dist/vue-quill.snow.css';
 
 import '../content/scss/global.scss';
 import '../content/scss/vendor.scss';
@@ -123,6 +125,7 @@ initFortAwesome(app);
 app
   .component('jhi-item-count', JhiItemCountComponent)
   .component('jhi-sort-indicator', JhiSortIndicatorComponent)
+  .component('QuillEditor', QuillEditor)
   .use(router)
   .use(pinia)
   .mount('#app');

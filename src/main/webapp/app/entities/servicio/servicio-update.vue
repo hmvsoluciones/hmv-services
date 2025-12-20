@@ -28,19 +28,18 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="form-control-label" for="servicio-informe">Informe</label>
-            <input
-              type="text"
+            <label class="form-control-label" for="servicio-contenido">Contenido</label>
+            <textarea
               class="form-control"
-              name="informe"
-              id="servicio-informe"
-              data-cy="informe"
-              :class="{ valid: !v$.informe.$invalid, invalid: v$.informe.$invalid }"
-              v-model="v$.informe.$model"
+              name="contenido"
+              id="servicio-contenido"
+              data-cy="contenido"
+              :class="{ valid: !v$.contenido.$invalid, invalid: v$.contenido.$invalid }"
+              v-model="v$.contenido.$model"
               required
-            />
-            <div v-if="v$.informe.$anyDirty && v$.informe.$invalid">
-              <small class="form-text text-danger" v-for="error of v$.informe.$errors" :key="error.$uid">{{ error.$message }}</small>
+            ></textarea>
+            <div v-if="v$.contenido.$anyDirty && v$.contenido.$invalid">
+              <small class="form-text text-danger" v-for="error of v$.contenido.$errors" :key="error.$uid">{{ error.$message }}</small>
             </div>
           </div>
           <div class="form-group">

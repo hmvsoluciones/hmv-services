@@ -48,8 +48,7 @@ public class TemplateAsserts {
         assertThat(actual)
             .as("Verify Template relevant properties")
             .satisfies(a -> assertThat(a.getNombre()).as("check nombre").isEqualTo(expected.getNombre()))
-            .satisfies(a -> assertThat(a.getContenidoMarkdown()).as("check contenidoMarkdown").isEqualTo(expected.getContenidoMarkdown()))
-            .satisfies(a -> assertThat(a.getVariables()).as("check variables").isEqualTo(expected.getVariables()))
+            .satisfies(a -> assertThat(a.getContenido()).as("check contenido").isEqualTo(expected.getContenido()))
             .satisfies(a -> assertThat(a.getActivo()).as("check activo").isEqualTo(expected.getActivo()));
     }
 

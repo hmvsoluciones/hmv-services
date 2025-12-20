@@ -28,7 +28,7 @@ describe('Service Tests', () => {
 
     beforeEach(() => {
       service = new TemplateService();
-      elemDefault = new Template(123, 'AAAAAAA', 'AAAAAAA', 'AAAAAAA', false);
+      elemDefault = new Template(123, 'AAAAAAA', 'AAAAAAA', false);
     });
 
     describe('Service methods', () => {
@@ -73,7 +73,7 @@ describe('Service Tests', () => {
       });
 
       it('should update a Template', async () => {
-        const returnedFromService = { nombre: 'BBBBBB', contenidoMarkdown: 'BBBBBB', variables: 'BBBBBB', activo: true, ...elemDefault };
+        const returnedFromService = { nombre: 'BBBBBB', contenido: 'BBBBBB', activo: true, ...elemDefault };
 
         const expected = { ...returnedFromService };
         axiosStub.put.resolves({ data: returnedFromService });
@@ -95,7 +95,7 @@ describe('Service Tests', () => {
       });
 
       it('should partial update a Template', async () => {
-        const patchObject = { nombre: 'BBBBBB', ...new Template() };
+        const patchObject = { contenido: 'BBBBBB', ...new Template() };
         const returnedFromService = Object.assign(patchObject, elemDefault);
 
         const expected = { ...returnedFromService };
@@ -118,7 +118,7 @@ describe('Service Tests', () => {
       });
 
       it('should return a list of Template', async () => {
-        const returnedFromService = { nombre: 'BBBBBB', contenidoMarkdown: 'BBBBBB', variables: 'BBBBBB', activo: true, ...elemDefault };
+        const returnedFromService = { nombre: 'BBBBBB', contenido: 'BBBBBB', activo: true, ...elemDefault };
         const expected = { ...returnedFromService };
         axiosStub.get.resolves([returnedFromService]);
         return service.retrieve({ sort: {}, page: 0, size: 10 }).then(res => {

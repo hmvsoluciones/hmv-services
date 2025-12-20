@@ -12,15 +12,9 @@
       "fieldValidateRulesMaxlength": "100"
     },
     {
-      "fieldName": "contenidoMarkdown",
-      "fieldType": "String",
+      "fieldName": "contenido",
+      "fieldType": "TextBlob",
       "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "variables",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "200"
     },
     {
       "fieldName": "activo",

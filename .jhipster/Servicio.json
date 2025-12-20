@@ -11,8 +11,8 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "informe",
-      "fieldType": "String",
+      "fieldName": "contenido",
+      "fieldType": "TextBlob",
       "fieldValidateRules": ["required"]
     },
     {

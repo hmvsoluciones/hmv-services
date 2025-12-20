@@ -49,7 +49,7 @@ public class ServicioAsserts {
         assertThat(actual)
             .as("Verify Servicio relevant properties")
             .satisfies(a -> assertThat(a.getFechaAtencion()).as("check fechaAtencion").isEqualTo(expected.getFechaAtencion()))
-            .satisfies(a -> assertThat(a.getInforme()).as("check informe").isEqualTo(expected.getInforme()))
+            .satisfies(a -> assertThat(a.getContenido()).as("check contenido").isEqualTo(expected.getContenido()))
             .satisfies(a ->
                 assertThat(a.getPrecio()).as("check precio").usingComparator(bigDecimalCompareTo).isEqualTo(expected.getPrecio())
             );

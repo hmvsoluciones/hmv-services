@@ -15,7 +15,7 @@ describe('Servicio e2e test', () => {
   const servicioPageUrlPattern = new RegExp('/servicio(\\?.*)?$');
   const username = Cypress.env('E2E_USERNAME') ?? 'user';
   const password = Cypress.env('E2E_PASSWORD') ?? 'user';
-  // const servicioSample = {"fechaAtencion":"2025-12-16T10:40:49.246Z","informe":"disconnection"};
+  // const servicioSample = {"fechaAtencion":"2025-12-16T18:30:38.819Z","contenido":"Li4vZmFrZS1kYXRhL2Jsb2IvaGlwc3Rlci50eHQ="};
 
   let servicio;
   // let cita;
@@ -216,11 +216,11 @@ describe('Servicio e2e test', () => {
       cy.get(`[data-cy="fechaAtencion"]`).blur();
       cy.get(`[data-cy="fechaAtencion"]`).should('have.value', '2025-12-15T23:10');
 
-      cy.get(`[data-cy="informe"]`).type('nifty');
-      cy.get(`[data-cy="informe"]`).should('have.value', 'nifty');
+      cy.get(`[data-cy="contenido"]`).type('../fake-data/blob/hipster.txt');
+      cy.get(`[data-cy="contenido"]`).invoke('val').should('match', new RegExp('../fake-data/blob/hipster.txt'));
 
-      cy.get(`[data-cy="precio"]`).type('11722.11');
-      cy.get(`[data-cy="precio"]`).should('have.value', '11722.11');
+      cy.get(`[data-cy="precio"]`).type('6557.2');
+      cy.get(`[data-cy="precio"]`).should('have.value', '6557.2');
 
       cy.get(`[data-cy="cita"]`).select(1);
 

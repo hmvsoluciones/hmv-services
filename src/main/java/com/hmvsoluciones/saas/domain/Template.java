@@ -2,6 +2,7 @@ package com.hmvsoluciones.saas.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import java.io.Serializable;
 
 /**
  * A Template.
@@ -9,7 +10,7 @@ import jakarta.validation.constraints.*;
 @Entity
 @Table(name = "template")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Template extends AbstractAuditingEntity<Long> {
+public class Template implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
@@ -24,13 +25,9 @@ public class Template extends AbstractAuditingEntity<Long> {
     @Column(name = "nombre", length = 100, nullable = false)
     private String nombre;
 
-    @NotNull
-    @Column(name = "contenido_markdown", nullable = false)
-    private String contenidoMarkdown;
-
-    @Size(max = 200)
-    @Column(name = "variables", length = 200)
-    private String variables;
+    @Lob
+    @Column(name = "contenido", nullable = false)
+    private String contenido;
 
     @Column(name = "activo")
     private Boolean activo;
@@ -63,30 +60,17 @@ public class Template extends AbstractAuditingEntity<Long> {
         this.nombre = nombre;
     }
 
-    public String getContenidoMarkdown() {
-        return this.contenidoMarkdown;
+    public String getContenido() {
+        return this.contenido;
     }
 
-    public Template contenidoMarkdown(String contenidoMarkdown) {
-        this.setContenidoMarkdown(contenidoMarkdown);
+    public Template contenido(String contenido) {
+        this.setContenido(contenido);
         return this;
     }
 
-    public void setContenidoMarkdown(String contenidoMarkdown) {
-        this.contenidoMarkdown = contenidoMarkdown;
-    }
-
-    public String getVariables() {
-        return this.variables;
-    }
-
-    public Template variables(String variables) {
-        this.setVariables(variables);
-        return this;
-    }
-
-    public void setVariables(String variables) {
-        this.variables = variables;
+    public void setContenido(String contenido) {
+        this.contenido = contenido;
     }
 
     public Boolean getActivo() {
@@ -127,8 +111,7 @@ public class Template extends AbstractAuditingEntity<Long> {
         return "Template{" +
             "id=" + getId() +
             ", nombre='" + getNombre() + "'" +
-            ", contenidoMarkdown='" + getContenidoMarkdown() + "'" +
-            ", variables='" + getVariables() + "'" +
+            ", contenido='" + getContenido() + "'" +
             ", activo='" + getActivo() + "'" +
             "}";
     }

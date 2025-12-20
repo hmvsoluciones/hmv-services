@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.hmvsoluciones.saas.domain.enumeration.EstadoCita;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
@@ -13,7 +14,7 @@ import java.time.LocalTime;
 @Entity
 @Table(name = "cita")
 @SuppressWarnings("common-java:DuplicatedBlocks")
-public class Cita extends AbstractAuditingEntity<Long> {
+public class Cita implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
