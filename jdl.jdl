@@ -28,13 +28,13 @@ enum EstadoCita {
 
 entity Servicio {
   fechaAtencion Instant required,
-  informe String required,
+  contenido TextBlob   required,
   precio BigDecimal
 }
 
 entity Template {
   nombre String required maxlength(100),
-  contenidoMarkdown String required,
+  contenido TextBlob   required,
   activo Boolean
 }
 
