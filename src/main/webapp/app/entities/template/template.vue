@@ -51,16 +51,17 @@
               <router-link :to="{ name: 'TemplateView', params: { templateId: template.id } }">{{ template.id }}</router-link>
             </td>
             <td>{{ template.nombre }}</td>
-            <td>{{ template.contenido }}</td>
+            <td>
+              <router-link :to="{ name: 'TemplateView', params: { templateId: template.id } }" custom v-slot="{ navigate }">
+                <button @click="navigate" class="btn btn-info btn-sm details" data-cy="entityDetailsButton">
+                  <font-awesome-icon icon="eye"></font-awesome-icon>
+                  <span class="d-none d-md-inline">Vista</span>
+                </button>
+              </router-link>
+            </td>
             <td>{{ template.activo }}</td>
             <td class="text-right">
               <div class="btn-group">
-                <router-link :to="{ name: 'TemplateView', params: { templateId: template.id } }" custom v-slot="{ navigate }">
-                  <button @click="navigate" class="btn btn-info btn-sm details" data-cy="entityDetailsButton">
-                    <font-awesome-icon icon="eye"></font-awesome-icon>
-                    <span class="d-none d-md-inline">Vista</span>
-                  </button>
-                </router-link>
                 <router-link :to="{ name: 'TemplateEdit', params: { templateId: template.id } }" custom v-slot="{ navigate }">
                   <button @click="navigate" class="btn btn-primary btn-sm edit" data-cy="entityEditButton">
                     <font-awesome-icon icon="pencil-alt"></font-awesome-icon>

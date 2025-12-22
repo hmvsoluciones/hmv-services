@@ -14,7 +14,7 @@
             <span>Contenido</span>
           </dt>
           <dd>
-            <span>{{ template.contenido }}</span>
+            <div style="border: solid 1px green;" v-html="template.contenido"></div>
           </dd>
           <dt>
             <span>Activo</span>
@@ -26,7 +26,8 @@
         <button type="submit" @click.prevent="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
           <font-awesome-icon icon="arrow-left"></font-awesome-icon>&nbsp;<span>Volver</span>
         </button>
-        <router-link v-if="template.id" :to="{ name: 'TemplateEdit', params: { templateId: template.id } }" custom v-slot="{ navigate }">
+        <router-link v-if="template.id" :to="{ name: 'TemplateEdit', params: { templateId: template.id } }" custom
+          v-slot="{ navigate }">
           <button @click="navigate" class="btn btn-primary">
             <font-awesome-icon icon="pencil-alt"></font-awesome-icon>&nbsp;<span>Editar</span>
           </button>
