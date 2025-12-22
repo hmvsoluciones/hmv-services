@@ -26,71 +26,71 @@ import tech.jhipster.config.JHipsterProperties;
 @Configuration
 public class WebConfigurer implements ServletContextInitializer, WebServerFactoryCustomizer<WebServerFactory> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(WebConfigurer.class);
+  private static final Logger LOG = LoggerFactory.getLogger(WebConfigurer.class);
 
-    private final Environment env;
+  private final Environment env;
 
-    private final JHipsterProperties jHipsterProperties;
+  private final JHipsterProperties jHipsterProperties;
 
-    public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
-        this.env = env;
-        this.jHipsterProperties = jHipsterProperties;
+  public WebConfigurer(Environment env, JHipsterProperties jHipsterProperties) {
+    this.env = env;
+    this.jHipsterProperties = jHipsterProperties;
+  }
+
+  @Override
+  public void onStartup(ServletContext servletContext) {
+    if (env.getActiveProfiles().length != 0) {
+      LOG.info("Web application configuration, using profiles: {}", (Object[]) env.getActiveProfiles());
     }
 
-    @Override
-    public void onStartup(ServletContext servletContext) {
-        if (env.getActiveProfiles().length != 0) {
-            LOG.info("Web application configuration, using profiles: {}", (Object[]) env.getActiveProfiles());
-        }
+    LOG.info("Web application fully configured");
+  }
 
-        LOG.info("Web application fully configured");
-    }
+  /**
+   * Customize the Servlet engine: Mime types, the document root, the cache.
+   */
+  @Override
+  public void customize(WebServerFactory server) {
+    // When running in an IDE or with ./mvnw spring-boot:run, set location of the static web assets.
+    setLocationForStaticAssets(server);
+  }
 
-    /**
-     * Customize the Servlet engine: Mime types, the document root, the cache.
-     */
-    @Override
-    public void customize(WebServerFactory server) {
-        // When running in an IDE or with ./mvnw spring-boot:run, set location of the static web assets.
-        setLocationForStaticAssets(server);
+  private void setLocationForStaticAssets(WebServerFactory server) {
+    if (server instanceof ConfigurableServletWebServerFactory servletWebServer) {
+      File root;
+      String prefixPath = resolvePathPrefix();
+      root = Path.of(prefixPath + "target/classes/static/").toFile();
+      if (root.exists() && root.isDirectory()) {
+        servletWebServer.setDocumentRoot(root);
+      }
     }
+  }
 
-    private void setLocationForStaticAssets(WebServerFactory server) {
-        if (server instanceof ConfigurableServletWebServerFactory servletWebServer) {
-            File root;
-            String prefixPath = resolvePathPrefix();
-            root = Path.of(prefixPath + "target/classes/static/").toFile();
-            if (root.exists() && root.isDirectory()) {
-                servletWebServer.setDocumentRoot(root);
-            }
-        }
+  /**
+   * Resolve path prefix to static resources.
+   */
+  private String resolvePathPrefix() {
+    String fullExecutablePath = decode(this.getClass().getResource("").getPath(), StandardCharsets.UTF_8);
+    String rootPath = Path.of(".").toUri().normalize().getPath();
+    String extractedPath = fullExecutablePath.replace(rootPath, "");
+    int extractionEndIndex = extractedPath.indexOf("target/");
+    if (extractionEndIndex <= 0) {
+      return "";
     }
+    return extractedPath.substring(0, extractionEndIndex);
+  }
 
-    /**
-     * Resolve path prefix to static resources.
-     */
-    private String resolvePathPrefix() {
-        String fullExecutablePath = decode(this.getClass().getResource("").getPath(), StandardCharsets.UTF_8);
-        String rootPath = Path.of(".").toUri().normalize().getPath();
-        String extractedPath = fullExecutablePath.replace(rootPath, "");
-        int extractionEndIndex = extractedPath.indexOf("target/");
-        if (extractionEndIndex <= 0) {
-            return "";
-        }
-        return extractedPath.substring(0, extractionEndIndex);
+  @Bean
+  public CorsFilter corsFilter() {
+    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+    CorsConfiguration config = jHipsterProperties.getCors();
+    if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
+      LOG.debug("Registering CORS filter");
+      source.registerCorsConfiguration("/api/**", config);
+      source.registerCorsConfiguration("/management/**", config);
+      source.registerCorsConfiguration("/v3/api-docs", config);
+      source.registerCorsConfiguration("/swagger-ui/**", config);
     }
-
-    @Bean
-    public CorsFilter corsFilter() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration config = jHipsterProperties.getCors();
-        if (!CollectionUtils.isEmpty(config.getAllowedOrigins()) || !CollectionUtils.isEmpty(config.getAllowedOriginPatterns())) {
-            LOG.debug("Registering CORS filter");
-            source.registerCorsConfiguration("/api/**", config);
-            source.registerCorsConfiguration("/management/**", config);
-            source.registerCorsConfiguration("/v3/api-docs", config);
-            source.registerCorsConfiguration("/swagger-ui/**", config);
-        }
-        return new CorsFilter(source);
-    }
+    return new CorsFilter(source);
+  }
 }

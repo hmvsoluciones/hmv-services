@@ -8,17 +8,17 @@ import org.junit.jupiter.api.Test;
 
 class ClienteMapperTest {
 
-    private ClienteMapper clienteMapper;
+  private ClienteMapper clienteMapper;
 
-    @BeforeEach
-    void setUp() {
-        clienteMapper = new ClienteMapperImpl();
-    }
+  @BeforeEach
+  void setUp() {
+    clienteMapper = new ClienteMapperImpl();
+  }
 
-    @Test
-    void shouldConvertToDtoAndBack() {
-        var expected = getClienteSample1();
-        var actual = clienteMapper.toEntity(clienteMapper.toDto(expected));
-        assertClienteAllPropertiesEquals(expected, actual);
-    }
+  @Test
+  void shouldConvertToDtoAndBack() {
+    var expected = getClienteSample1();
+    var actual = clienteMapper.toEntity(clienteMapper.toDto(expected));
+    assertClienteAllPropertiesEquals(expected, actual);
+  }
 }

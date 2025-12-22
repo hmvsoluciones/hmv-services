@@ -8,17 +8,17 @@ import org.junit.jupiter.api.Test;
 
 class NegocioMapperTest {
 
-    private NegocioMapper negocioMapper;
+  private NegocioMapper negocioMapper;
 
-    @BeforeEach
-    void setUp() {
-        negocioMapper = new NegocioMapperImpl();
-    }
+  @BeforeEach
+  void setUp() {
+    negocioMapper = new NegocioMapperImpl();
+  }
 
-    @Test
-    void shouldConvertToDtoAndBack() {
-        var expected = getNegocioSample1();
-        var actual = negocioMapper.toEntity(negocioMapper.toDto(expected));
-        assertNegocioAllPropertiesEquals(expected, actual);
-    }
+  @Test
+  void shouldConvertToDtoAndBack() {
+    var expected = getNegocioSample1();
+    var actual = negocioMapper.toEntity(negocioMapper.toDto(expected));
+    assertNegocioAllPropertiesEquals(expected, actual);
+  }
 }

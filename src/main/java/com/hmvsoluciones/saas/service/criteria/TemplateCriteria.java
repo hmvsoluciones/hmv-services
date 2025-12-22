@@ -20,129 +20,129 @@ import tech.jhipster.service.filter.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class TemplateCriteria implements Serializable, Criteria {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private LongFilter id;
+  private LongFilter id;
 
-    private StringFilter nombre;
+  private StringFilter nombre;
 
-    private BooleanFilter activo;
+  private BooleanFilter activo;
 
-    private Boolean distinct;
+  private Boolean distinct;
 
-    public TemplateCriteria() {}
+  public TemplateCriteria() {}
 
-    public TemplateCriteria(TemplateCriteria other) {
-        this.id = other.optionalId().map(LongFilter::copy).orElse(null);
-        this.nombre = other.optionalNombre().map(StringFilter::copy).orElse(null);
-        this.activo = other.optionalActivo().map(BooleanFilter::copy).orElse(null);
-        this.distinct = other.distinct;
+  public TemplateCriteria(TemplateCriteria other) {
+    this.id = other.optionalId().map(LongFilter::copy).orElse(null);
+    this.nombre = other.optionalNombre().map(StringFilter::copy).orElse(null);
+    this.activo = other.optionalActivo().map(BooleanFilter::copy).orElse(null);
+    this.distinct = other.distinct;
+  }
+
+  @Override
+  public TemplateCriteria copy() {
+    return new TemplateCriteria(this);
+  }
+
+  public LongFilter getId() {
+    return id;
+  }
+
+  public Optional<LongFilter> optionalId() {
+    return Optional.ofNullable(id);
+  }
+
+  public LongFilter id() {
+    if (id == null) {
+      setId(new LongFilter());
     }
+    return id;
+  }
 
-    @Override
-    public TemplateCriteria copy() {
-        return new TemplateCriteria(this);
+  public void setId(LongFilter id) {
+    this.id = id;
+  }
+
+  public StringFilter getNombre() {
+    return nombre;
+  }
+
+  public Optional<StringFilter> optionalNombre() {
+    return Optional.ofNullable(nombre);
+  }
+
+  public StringFilter nombre() {
+    if (nombre == null) {
+      setNombre(new StringFilter());
     }
+    return nombre;
+  }
 
-    public LongFilter getId() {
-        return id;
+  public void setNombre(StringFilter nombre) {
+    this.nombre = nombre;
+  }
+
+  public BooleanFilter getActivo() {
+    return activo;
+  }
+
+  public Optional<BooleanFilter> optionalActivo() {
+    return Optional.ofNullable(activo);
+  }
+
+  public BooleanFilter activo() {
+    if (activo == null) {
+      setActivo(new BooleanFilter());
     }
+    return activo;
+  }
 
-    public Optional<LongFilter> optionalId() {
-        return Optional.ofNullable(id);
+  public void setActivo(BooleanFilter activo) {
+    this.activo = activo;
+  }
+
+  public Boolean getDistinct() {
+    return distinct;
+  }
+
+  public Optional<Boolean> optionalDistinct() {
+    return Optional.ofNullable(distinct);
+  }
+
+  public Boolean distinct() {
+    if (distinct == null) {
+      setDistinct(true);
     }
+    return distinct;
+  }
 
-    public LongFilter id() {
-        if (id == null) {
-            setId(new LongFilter());
-        }
-        return id;
+  public void setDistinct(Boolean distinct) {
+    this.distinct = distinct;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    public void setId(LongFilter id) {
-        this.id = id;
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
+    final TemplateCriteria that = (TemplateCriteria) o;
+    return (
+      Objects.equals(id, that.id) &&
+      Objects.equals(nombre, that.nombre) &&
+      Objects.equals(activo, that.activo) &&
+      Objects.equals(distinct, that.distinct)
+    );
+  }
 
-    public StringFilter getNombre() {
-        return nombre;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nombre, activo, distinct);
+  }
 
-    public Optional<StringFilter> optionalNombre() {
-        return Optional.ofNullable(nombre);
-    }
-
-    public StringFilter nombre() {
-        if (nombre == null) {
-            setNombre(new StringFilter());
-        }
-        return nombre;
-    }
-
-    public void setNombre(StringFilter nombre) {
-        this.nombre = nombre;
-    }
-
-    public BooleanFilter getActivo() {
-        return activo;
-    }
-
-    public Optional<BooleanFilter> optionalActivo() {
-        return Optional.ofNullable(activo);
-    }
-
-    public BooleanFilter activo() {
-        if (activo == null) {
-            setActivo(new BooleanFilter());
-        }
-        return activo;
-    }
-
-    public void setActivo(BooleanFilter activo) {
-        this.activo = activo;
-    }
-
-    public Boolean getDistinct() {
-        return distinct;
-    }
-
-    public Optional<Boolean> optionalDistinct() {
-        return Optional.ofNullable(distinct);
-    }
-
-    public Boolean distinct() {
-        if (distinct == null) {
-            setDistinct(true);
-        }
-        return distinct;
-    }
-
-    public void setDistinct(Boolean distinct) {
-        this.distinct = distinct;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final TemplateCriteria that = (TemplateCriteria) o;
-        return (
-            Objects.equals(id, that.id) &&
-            Objects.equals(nombre, that.nombre) &&
-            Objects.equals(activo, that.activo) &&
-            Objects.equals(distinct, that.distinct)
-        );
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nombre, activo, distinct);
-    }
-
-    // prettier-ignore
+  // prettier-ignore
     @Override
     public String toString() {
         return "TemplateCriteria{" +

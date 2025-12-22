@@ -8,8 +8,8 @@ import org.springframework.core.task.SyncTaskExecutor;
 @Configuration
 public class AsyncSyncConfiguration {
 
-    @Bean(name = "taskExecutor")
-    public Executor taskExecutor() {
-        return new SyncTaskExecutor();
-    }
+  @Bean(name = "taskExecutor")
+  public Executor taskExecutor() {
+    return new SyncTaskExecutor();
+  }
 }

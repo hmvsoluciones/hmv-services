@@ -20,221 +20,221 @@ import tech.jhipster.service.filter.*;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class NegocioCriteria implements Serializable, Criteria {
 
-    private static final long serialVersionUID = 1L;
+  private static final long serialVersionUID = 1L;
 
-    private LongFilter id;
+  private LongFilter id;
 
-    private StringFilter nombre;
+  private StringFilter nombre;
 
-    private StringFilter responsable;
+  private StringFilter responsable;
 
-    private StringFilter celular;
+  private StringFilter celular;
 
-    private StringFilter correo;
+  private StringFilter correo;
 
-    private StringFilter subscriptionKey;
+  private StringFilter subscriptionKey;
 
-    private BooleanFilter esActivo;
+  private BooleanFilter esActivo;
 
-    private Boolean distinct;
+  private Boolean distinct;
 
-    public NegocioCriteria() {}
+  public NegocioCriteria() {}
 
-    public NegocioCriteria(NegocioCriteria other) {
-        this.id = other.optionalId().map(LongFilter::copy).orElse(null);
-        this.nombre = other.optionalNombre().map(StringFilter::copy).orElse(null);
-        this.responsable = other.optionalResponsable().map(StringFilter::copy).orElse(null);
-        this.celular = other.optionalCelular().map(StringFilter::copy).orElse(null);
-        this.correo = other.optionalCorreo().map(StringFilter::copy).orElse(null);
-        this.subscriptionKey = other.optionalSubscriptionKey().map(StringFilter::copy).orElse(null);
-        this.esActivo = other.optionalEsActivo().map(BooleanFilter::copy).orElse(null);
-        this.distinct = other.distinct;
+  public NegocioCriteria(NegocioCriteria other) {
+    this.id = other.optionalId().map(LongFilter::copy).orElse(null);
+    this.nombre = other.optionalNombre().map(StringFilter::copy).orElse(null);
+    this.responsable = other.optionalResponsable().map(StringFilter::copy).orElse(null);
+    this.celular = other.optionalCelular().map(StringFilter::copy).orElse(null);
+    this.correo = other.optionalCorreo().map(StringFilter::copy).orElse(null);
+    this.subscriptionKey = other.optionalSubscriptionKey().map(StringFilter::copy).orElse(null);
+    this.esActivo = other.optionalEsActivo().map(BooleanFilter::copy).orElse(null);
+    this.distinct = other.distinct;
+  }
+
+  @Override
+  public NegocioCriteria copy() {
+    return new NegocioCriteria(this);
+  }
+
+  public LongFilter getId() {
+    return id;
+  }
+
+  public Optional<LongFilter> optionalId() {
+    return Optional.ofNullable(id);
+  }
+
+  public LongFilter id() {
+    if (id == null) {
+      setId(new LongFilter());
     }
+    return id;
+  }
 
-    @Override
-    public NegocioCriteria copy() {
-        return new NegocioCriteria(this);
+  public void setId(LongFilter id) {
+    this.id = id;
+  }
+
+  public StringFilter getNombre() {
+    return nombre;
+  }
+
+  public Optional<StringFilter> optionalNombre() {
+    return Optional.ofNullable(nombre);
+  }
+
+  public StringFilter nombre() {
+    if (nombre == null) {
+      setNombre(new StringFilter());
     }
+    return nombre;
+  }
 
-    public LongFilter getId() {
-        return id;
+  public void setNombre(StringFilter nombre) {
+    this.nombre = nombre;
+  }
+
+  public StringFilter getResponsable() {
+    return responsable;
+  }
+
+  public Optional<StringFilter> optionalResponsable() {
+    return Optional.ofNullable(responsable);
+  }
+
+  public StringFilter responsable() {
+    if (responsable == null) {
+      setResponsable(new StringFilter());
     }
+    return responsable;
+  }
 
-    public Optional<LongFilter> optionalId() {
-        return Optional.ofNullable(id);
+  public void setResponsable(StringFilter responsable) {
+    this.responsable = responsable;
+  }
+
+  public StringFilter getCelular() {
+    return celular;
+  }
+
+  public Optional<StringFilter> optionalCelular() {
+    return Optional.ofNullable(celular);
+  }
+
+  public StringFilter celular() {
+    if (celular == null) {
+      setCelular(new StringFilter());
     }
+    return celular;
+  }
 
-    public LongFilter id() {
-        if (id == null) {
-            setId(new LongFilter());
-        }
-        return id;
+  public void setCelular(StringFilter celular) {
+    this.celular = celular;
+  }
+
+  public StringFilter getCorreo() {
+    return correo;
+  }
+
+  public Optional<StringFilter> optionalCorreo() {
+    return Optional.ofNullable(correo);
+  }
+
+  public StringFilter correo() {
+    if (correo == null) {
+      setCorreo(new StringFilter());
     }
+    return correo;
+  }
 
-    public void setId(LongFilter id) {
-        this.id = id;
+  public void setCorreo(StringFilter correo) {
+    this.correo = correo;
+  }
+
+  public StringFilter getSubscriptionKey() {
+    return subscriptionKey;
+  }
+
+  public Optional<StringFilter> optionalSubscriptionKey() {
+    return Optional.ofNullable(subscriptionKey);
+  }
+
+  public StringFilter subscriptionKey() {
+    if (subscriptionKey == null) {
+      setSubscriptionKey(new StringFilter());
     }
+    return subscriptionKey;
+  }
 
-    public StringFilter getNombre() {
-        return nombre;
+  public void setSubscriptionKey(StringFilter subscriptionKey) {
+    this.subscriptionKey = subscriptionKey;
+  }
+
+  public BooleanFilter getEsActivo() {
+    return esActivo;
+  }
+
+  public Optional<BooleanFilter> optionalEsActivo() {
+    return Optional.ofNullable(esActivo);
+  }
+
+  public BooleanFilter esActivo() {
+    if (esActivo == null) {
+      setEsActivo(new BooleanFilter());
     }
+    return esActivo;
+  }
 
-    public Optional<StringFilter> optionalNombre() {
-        return Optional.ofNullable(nombre);
+  public void setEsActivo(BooleanFilter esActivo) {
+    this.esActivo = esActivo;
+  }
+
+  public Boolean getDistinct() {
+    return distinct;
+  }
+
+  public Optional<Boolean> optionalDistinct() {
+    return Optional.ofNullable(distinct);
+  }
+
+  public Boolean distinct() {
+    if (distinct == null) {
+      setDistinct(true);
     }
+    return distinct;
+  }
 
-    public StringFilter nombre() {
-        if (nombre == null) {
-            setNombre(new StringFilter());
-        }
-        return nombre;
+  public void setDistinct(Boolean distinct) {
+    this.distinct = distinct;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
     }
-
-    public void setNombre(StringFilter nombre) {
-        this.nombre = nombre;
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
+    final NegocioCriteria that = (NegocioCriteria) o;
+    return (
+      Objects.equals(id, that.id) &&
+      Objects.equals(nombre, that.nombre) &&
+      Objects.equals(responsable, that.responsable) &&
+      Objects.equals(celular, that.celular) &&
+      Objects.equals(correo, that.correo) &&
+      Objects.equals(subscriptionKey, that.subscriptionKey) &&
+      Objects.equals(esActivo, that.esActivo) &&
+      Objects.equals(distinct, that.distinct)
+    );
+  }
 
-    public StringFilter getResponsable() {
-        return responsable;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(id, nombre, responsable, celular, correo, subscriptionKey, esActivo, distinct);
+  }
 
-    public Optional<StringFilter> optionalResponsable() {
-        return Optional.ofNullable(responsable);
-    }
-
-    public StringFilter responsable() {
-        if (responsable == null) {
-            setResponsable(new StringFilter());
-        }
-        return responsable;
-    }
-
-    public void setResponsable(StringFilter responsable) {
-        this.responsable = responsable;
-    }
-
-    public StringFilter getCelular() {
-        return celular;
-    }
-
-    public Optional<StringFilter> optionalCelular() {
-        return Optional.ofNullable(celular);
-    }
-
-    public StringFilter celular() {
-        if (celular == null) {
-            setCelular(new StringFilter());
-        }
-        return celular;
-    }
-
-    public void setCelular(StringFilter celular) {
-        this.celular = celular;
-    }
-
-    public StringFilter getCorreo() {
-        return correo;
-    }
-
-    public Optional<StringFilter> optionalCorreo() {
-        return Optional.ofNullable(correo);
-    }
-
-    public StringFilter correo() {
-        if (correo == null) {
-            setCorreo(new StringFilter());
-        }
-        return correo;
-    }
-
-    public void setCorreo(StringFilter correo) {
-        this.correo = correo;
-    }
-
-    public StringFilter getSubscriptionKey() {
-        return subscriptionKey;
-    }
-
-    public Optional<StringFilter> optionalSubscriptionKey() {
-        return Optional.ofNullable(subscriptionKey);
-    }
-
-    public StringFilter subscriptionKey() {
-        if (subscriptionKey == null) {
-            setSubscriptionKey(new StringFilter());
-        }
-        return subscriptionKey;
-    }
-
-    public void setSubscriptionKey(StringFilter subscriptionKey) {
-        this.subscriptionKey = subscriptionKey;
-    }
-
-    public BooleanFilter getEsActivo() {
-        return esActivo;
-    }
-
-    public Optional<BooleanFilter> optionalEsActivo() {
-        return Optional.ofNullable(esActivo);
-    }
-
-    public BooleanFilter esActivo() {
-        if (esActivo == null) {
-            setEsActivo(new BooleanFilter());
-        }
-        return esActivo;
-    }
-
-    public void setEsActivo(BooleanFilter esActivo) {
-        this.esActivo = esActivo;
-    }
-
-    public Boolean getDistinct() {
-        return distinct;
-    }
-
-    public Optional<Boolean> optionalDistinct() {
-        return Optional.ofNullable(distinct);
-    }
-
-    public Boolean distinct() {
-        if (distinct == null) {
-            setDistinct(true);
-        }
-        return distinct;
-    }
-
-    public void setDistinct(Boolean distinct) {
-        this.distinct = distinct;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
-        final NegocioCriteria that = (NegocioCriteria) o;
-        return (
-            Objects.equals(id, that.id) &&
-            Objects.equals(nombre, that.nombre) &&
-            Objects.equals(responsable, that.responsable) &&
-            Objects.equals(celular, that.celular) &&
-            Objects.equals(correo, that.correo) &&
-            Objects.equals(subscriptionKey, that.subscriptionKey) &&
-            Objects.equals(esActivo, that.esActivo) &&
-            Objects.equals(distinct, that.distinct)
-        );
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, nombre, responsable, celular, correo, subscriptionKey, esActivo, distinct);
-    }
-
-    // prettier-ignore
+  // prettier-ignore
     @Override
     public String toString() {
         return "NegocioCriteria{" +

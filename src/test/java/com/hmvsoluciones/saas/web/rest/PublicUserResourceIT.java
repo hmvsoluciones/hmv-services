@@ -28,64 +28,64 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 class PublicUserResourceIT {
 
-    @Autowired
-    private UserRepository userRepository;
+  @Autowired
+  private UserRepository userRepository;
 
-    @Autowired
-    private UserService userService;
+  @Autowired
+  private UserService userService;
 
-    @Autowired
-    private MockMvc restUserMockMvc;
+  @Autowired
+  private MockMvc restUserMockMvc;
 
-    private User user;
-    private Long numberOfUsers;
+  private User user;
+  private Long numberOfUsers;
 
-    @BeforeEach
-    void countUsers() {
-        numberOfUsers = userRepository.count();
-    }
+  @BeforeEach
+  void countUsers() {
+    numberOfUsers = userRepository.count();
+  }
 
-    @BeforeEach
-    void initTest() {
-        user = UserResourceIT.initTestUser();
-    }
+  @BeforeEach
+  void initTest() {
+    user = UserResourceIT.initTestUser();
+  }
 
-    @AfterEach
-    void cleanupAndCheck() {
-        userService.deleteUser(user.getLogin());
-        assertThat(userRepository.count()).isEqualTo(numberOfUsers);
-        numberOfUsers = null;
-    }
+  @AfterEach
+  void cleanupAndCheck() {
+    userService.deleteUser(user.getLogin());
+    assertThat(userRepository.count()).isEqualTo(numberOfUsers);
+    numberOfUsers = null;
+  }
 
-    @Test
-    @Transactional
-    void getAllPublicUsers() throws Exception {
-        // Initialize the database
-        userRepository.saveAndFlush(user);
+  @Test
+  @Transactional
+  void getAllPublicUsers() throws Exception {
+    // Initialize the database
+    userRepository.saveAndFlush(user);
 
-        // Get all the users
-        restUserMockMvc
-            .perform(get("/api/users?sort=id,desc").accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isOk())
-            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[?(@.id == %d)].login", user.getId()).value(user.getLogin()))
-            .andExpect(jsonPath("$.[?(@.id == %d)].keys()", user.getId()).value(Set.of("id", "login")))
-            .andExpect(jsonPath("$.[*].email").doesNotHaveJsonPath())
-            .andExpect(jsonPath("$.[*].imageUrl").doesNotHaveJsonPath())
-            .andExpect(jsonPath("$.[*].langKey").doesNotHaveJsonPath());
-    }
+    // Get all the users
+    restUserMockMvc
+      .perform(get("/api/users?sort=id,desc").accept(MediaType.APPLICATION_JSON))
+      .andExpect(status().isOk())
+      .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+      .andExpect(jsonPath("$.[?(@.id == %d)].login", user.getId()).value(user.getLogin()))
+      .andExpect(jsonPath("$.[?(@.id == %d)].keys()", user.getId()).value(Set.of("id", "login")))
+      .andExpect(jsonPath("$.[*].email").doesNotHaveJsonPath())
+      .andExpect(jsonPath("$.[*].imageUrl").doesNotHaveJsonPath())
+      .andExpect(jsonPath("$.[*].langKey").doesNotHaveJsonPath());
+  }
 
-    @Test
-    @Transactional
-    void getAllUsersSortedByParameters() throws Exception {
-        // Initialize the database
-        userRepository.saveAndFlush(user);
+  @Test
+  @Transactional
+  void getAllUsersSortedByParameters() throws Exception {
+    // Initialize the database
+    userRepository.saveAndFlush(user);
 
-        restUserMockMvc.perform(get("/api/users?sort=resetKey,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
-        restUserMockMvc.perform(get("/api/users?sort=password,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
-        restUserMockMvc
-            .perform(get("/api/users?sort=resetKey,desc&sort=id,desc").accept(MediaType.APPLICATION_JSON))
-            .andExpect(status().isBadRequest());
-        restUserMockMvc.perform(get("/api/users?sort=id,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
-    }
+    restUserMockMvc.perform(get("/api/users?sort=resetKey,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+    restUserMockMvc.perform(get("/api/users?sort=password,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isBadRequest());
+    restUserMockMvc
+      .perform(get("/api/users?sort=resetKey,desc&sort=id,desc").accept(MediaType.APPLICATION_JSON))
+      .andExpect(status().isBadRequest());
+    restUserMockMvc.perform(get("/api/users?sort=id,desc").accept(MediaType.APPLICATION_JSON)).andExpect(status().isOk());
+  }
 }

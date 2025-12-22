@@ -26,146 +26,146 @@ import tech.jhipster.web.util.ResponseUtil;
 @RequestMapping("/api/servicios")
 public class ServicioResource {
 
-    private static final Logger LOG = LoggerFactory.getLogger(ServicioResource.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ServicioResource.class);
 
-    private static final String ENTITY_NAME = "servicio";
+  private static final String ENTITY_NAME = "servicio";
 
-    @Value("${jhipster.clientApp.name}")
-    private String applicationName;
+  @Value("${jhipster.clientApp.name}")
+  private String applicationName;
 
-    private final ServicioService servicioService;
+  private final ServicioService servicioService;
 
-    private final ServicioRepository servicioRepository;
+  private final ServicioRepository servicioRepository;
 
-    public ServicioResource(ServicioService servicioService, ServicioRepository servicioRepository) {
-        this.servicioService = servicioService;
-        this.servicioRepository = servicioRepository;
+  public ServicioResource(ServicioService servicioService, ServicioRepository servicioRepository) {
+    this.servicioService = servicioService;
+    this.servicioRepository = servicioRepository;
+  }
+
+  /**
+   * {@code POST  /servicios} : Create a new servicio.
+   *
+   * @param servicioDTO the servicioDTO to create.
+   * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new servicioDTO, or with status {@code 400 (Bad Request)} if the servicio has already an ID.
+   * @throws URISyntaxException if the Location URI syntax is incorrect.
+   */
+  @PostMapping("")
+  public ResponseEntity<ServicioDTO> createServicio(@Valid @RequestBody ServicioDTO servicioDTO) throws URISyntaxException {
+    LOG.debug("REST request to save Servicio : {}", servicioDTO);
+    if (servicioDTO.getId() != null) {
+      throw new BadRequestAlertException("A new servicio cannot already have an ID", ENTITY_NAME, "idexists");
+    }
+    servicioDTO = servicioService.save(servicioDTO);
+    return ResponseEntity.created(new URI("/api/servicios/" + servicioDTO.getId()))
+      .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, servicioDTO.getId().toString()))
+      .body(servicioDTO);
+  }
+
+  /**
+   * {@code PUT  /servicios/:id} : Updates an existing servicio.
+   *
+   * @param id the id of the servicioDTO to save.
+   * @param servicioDTO the servicioDTO to update.
+   * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated servicioDTO,
+   * or with status {@code 400 (Bad Request)} if the servicioDTO is not valid,
+   * or with status {@code 500 (Internal Server Error)} if the servicioDTO couldn't be updated.
+   * @throws URISyntaxException if the Location URI syntax is incorrect.
+   */
+  @PutMapping("/{id}")
+  public ResponseEntity<ServicioDTO> updateServicio(
+    @PathVariable(value = "id", required = false) final Long id,
+    @Valid @RequestBody ServicioDTO servicioDTO
+  ) throws URISyntaxException {
+    LOG.debug("REST request to update Servicio : {}, {}", id, servicioDTO);
+    if (servicioDTO.getId() == null) {
+      throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+    }
+    if (!Objects.equals(id, servicioDTO.getId())) {
+      throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
     }
 
-    /**
-     * {@code POST  /servicios} : Create a new servicio.
-     *
-     * @param servicioDTO the servicioDTO to create.
-     * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new servicioDTO, or with status {@code 400 (Bad Request)} if the servicio has already an ID.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PostMapping("")
-    public ResponseEntity<ServicioDTO> createServicio(@Valid @RequestBody ServicioDTO servicioDTO) throws URISyntaxException {
-        LOG.debug("REST request to save Servicio : {}", servicioDTO);
-        if (servicioDTO.getId() != null) {
-            throw new BadRequestAlertException("A new servicio cannot already have an ID", ENTITY_NAME, "idexists");
-        }
-        servicioDTO = servicioService.save(servicioDTO);
-        return ResponseEntity.created(new URI("/api/servicios/" + servicioDTO.getId()))
-            .headers(HeaderUtil.createEntityCreationAlert(applicationName, false, ENTITY_NAME, servicioDTO.getId().toString()))
-            .body(servicioDTO);
+    if (!servicioRepository.existsById(id)) {
+      throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
     }
 
-    /**
-     * {@code PUT  /servicios/:id} : Updates an existing servicio.
-     *
-     * @param id the id of the servicioDTO to save.
-     * @param servicioDTO the servicioDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated servicioDTO,
-     * or with status {@code 400 (Bad Request)} if the servicioDTO is not valid,
-     * or with status {@code 500 (Internal Server Error)} if the servicioDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PutMapping("/{id}")
-    public ResponseEntity<ServicioDTO> updateServicio(
-        @PathVariable(value = "id", required = false) final Long id,
-        @Valid @RequestBody ServicioDTO servicioDTO
-    ) throws URISyntaxException {
-        LOG.debug("REST request to update Servicio : {}, {}", id, servicioDTO);
-        if (servicioDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, servicioDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
+    servicioDTO = servicioService.update(servicioDTO);
+    return ResponseEntity.ok()
+      .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, servicioDTO.getId().toString()))
+      .body(servicioDTO);
+  }
 
-        if (!servicioRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        servicioDTO = servicioService.update(servicioDTO);
-        return ResponseEntity.ok()
-            .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, servicioDTO.getId().toString()))
-            .body(servicioDTO);
+  /**
+   * {@code PATCH  /servicios/:id} : Partial updates given fields of an existing servicio, field will ignore if it is null
+   *
+   * @param id the id of the servicioDTO to save.
+   * @param servicioDTO the servicioDTO to update.
+   * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated servicioDTO,
+   * or with status {@code 400 (Bad Request)} if the servicioDTO is not valid,
+   * or with status {@code 404 (Not Found)} if the servicioDTO is not found,
+   * or with status {@code 500 (Internal Server Error)} if the servicioDTO couldn't be updated.
+   * @throws URISyntaxException if the Location URI syntax is incorrect.
+   */
+  @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
+  public ResponseEntity<ServicioDTO> partialUpdateServicio(
+    @PathVariable(value = "id", required = false) final Long id,
+    @NotNull @RequestBody ServicioDTO servicioDTO
+  ) throws URISyntaxException {
+    LOG.debug("REST request to partial update Servicio partially : {}, {}", id, servicioDTO);
+    if (servicioDTO.getId() == null) {
+      throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+    }
+    if (!Objects.equals(id, servicioDTO.getId())) {
+      throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
     }
 
-    /**
-     * {@code PATCH  /servicios/:id} : Partial updates given fields of an existing servicio, field will ignore if it is null
-     *
-     * @param id the id of the servicioDTO to save.
-     * @param servicioDTO the servicioDTO to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated servicioDTO,
-     * or with status {@code 400 (Bad Request)} if the servicioDTO is not valid,
-     * or with status {@code 404 (Not Found)} if the servicioDTO is not found,
-     * or with status {@code 500 (Internal Server Error)} if the servicioDTO couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<ServicioDTO> partialUpdateServicio(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody ServicioDTO servicioDTO
-    ) throws URISyntaxException {
-        LOG.debug("REST request to partial update Servicio partially : {}, {}", id, servicioDTO);
-        if (servicioDTO.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, servicioDTO.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!servicioRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<ServicioDTO> result = servicioService.partialUpdate(servicioDTO);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, servicioDTO.getId().toString())
-        );
+    if (!servicioRepository.existsById(id)) {
+      throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
     }
 
-    /**
-     * {@code GET  /servicios} : get all the servicios.
-     *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of servicios in body.
-     */
-    @GetMapping("")
-    public List<ServicioDTO> getAllServicios() {
-        LOG.debug("REST request to get all Servicios");
-        return servicioService.findAll();
-    }
+    Optional<ServicioDTO> result = servicioService.partialUpdate(servicioDTO);
 
-    /**
-     * {@code GET  /servicios/:id} : get the "id" servicio.
-     *
-     * @param id the id of the servicioDTO to retrieve.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the servicioDTO, or with status {@code 404 (Not Found)}.
-     */
-    @GetMapping("/{id}")
-    public ResponseEntity<ServicioDTO> getServicio(@PathVariable("id") Long id) {
-        LOG.debug("REST request to get Servicio : {}", id);
-        Optional<ServicioDTO> servicioDTO = servicioService.findOne(id);
-        return ResponseUtil.wrapOrNotFound(servicioDTO);
-    }
+    return ResponseUtil.wrapOrNotFound(
+      result,
+      HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, servicioDTO.getId().toString())
+    );
+  }
 
-    /**
-     * {@code DELETE  /servicios/:id} : delete the "id" servicio.
-     *
-     * @param id the id of the servicioDTO to delete.
-     * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
-     */
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteServicio(@PathVariable("id") Long id) {
-        LOG.debug("REST request to delete Servicio : {}", id);
-        servicioService.delete(id);
-        return ResponseEntity.noContent()
-            .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
-            .build();
-    }
+  /**
+   * {@code GET  /servicios} : get all the servicios.
+   *
+   * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of servicios in body.
+   */
+  @GetMapping("")
+  public List<ServicioDTO> getAllServicios() {
+    LOG.debug("REST request to get all Servicios");
+    return servicioService.findAll();
+  }
+
+  /**
+   * {@code GET  /servicios/:id} : get the "id" servicio.
+   *
+   * @param id the id of the servicioDTO to retrieve.
+   * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the servicioDTO, or with status {@code 404 (Not Found)}.
+   */
+  @GetMapping("/{id}")
+  public ResponseEntity<ServicioDTO> getServicio(@PathVariable("id") Long id) {
+    LOG.debug("REST request to get Servicio : {}", id);
+    Optional<ServicioDTO> servicioDTO = servicioService.findOne(id);
+    return ResponseUtil.wrapOrNotFound(servicioDTO);
+  }
+
+  /**
+   * {@code DELETE  /servicios/:id} : delete the "id" servicio.
+   *
+   * @param id the id of the servicioDTO to delete.
+   * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
+   */
+  @DeleteMapping("/{id}")
+  public ResponseEntity<Void> deleteServicio(@PathVariable("id") Long id) {
+    LOG.debug("REST request to delete Servicio : {}", id);
+    servicioService.delete(id);
+    return ResponseEntity.noContent()
+      .headers(HeaderUtil.createEntityDeletionAlert(applicationName, false, ENTITY_NAME, id.toString()))
+      .build();
+  }
 }

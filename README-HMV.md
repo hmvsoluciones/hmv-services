@@ -13,3 +13,7 @@ jhipster import-jdl .\jdl.jdl
 ## Regrenarar plantillas
 
 jhipster jdl.\jdl.jdl --force
+
+## Prettier para todos los archivos
+
+npx prettier --write .

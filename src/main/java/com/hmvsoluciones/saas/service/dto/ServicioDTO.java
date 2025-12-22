@@ -13,81 +13,81 @@ import java.util.Objects;
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class ServicioDTO implements Serializable {
 
-    private Long id;
+  private Long id;
 
-    @NotNull
-    private Instant fechaAtencion;
+  @NotNull
+  private Instant fechaAtencion;
 
-    @Lob
-    private String contenido;
+  @Lob
+  private String contenido;
 
-    private BigDecimal precio;
+  private BigDecimal precio;
 
-    @NotNull
-    private CitaDTO cita;
+  @NotNull
+  private CitaDTO cita;
 
-    public Long getId() {
-        return id;
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public Instant getFechaAtencion() {
+    return fechaAtencion;
+  }
+
+  public void setFechaAtencion(Instant fechaAtencion) {
+    this.fechaAtencion = fechaAtencion;
+  }
+
+  public String getContenido() {
+    return contenido;
+  }
+
+  public void setContenido(String contenido) {
+    this.contenido = contenido;
+  }
+
+  public BigDecimal getPrecio() {
+    return precio;
+  }
+
+  public void setPrecio(BigDecimal precio) {
+    this.precio = precio;
+  }
+
+  public CitaDTO getCita() {
+    return cita;
+  }
+
+  public void setCita(CitaDTO cita) {
+    this.cita = cita;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (!(o instanceof ServicioDTO)) {
+      return false;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    ServicioDTO servicioDTO = (ServicioDTO) o;
+    if (this.id == null) {
+      return false;
     }
+    return Objects.equals(this.id, servicioDTO.id);
+  }
 
-    public Instant getFechaAtencion() {
-        return fechaAtencion;
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(this.id);
+  }
 
-    public void setFechaAtencion(Instant fechaAtencion) {
-        this.fechaAtencion = fechaAtencion;
-    }
-
-    public String getContenido() {
-        return contenido;
-    }
-
-    public void setContenido(String contenido) {
-        this.contenido = contenido;
-    }
-
-    public BigDecimal getPrecio() {
-        return precio;
-    }
-
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
-    }
-
-    public CitaDTO getCita() {
-        return cita;
-    }
-
-    public void setCita(CitaDTO cita) {
-        this.cita = cita;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof ServicioDTO)) {
-            return false;
-        }
-
-        ServicioDTO servicioDTO = (ServicioDTO) o;
-        if (this.id == null) {
-            return false;
-        }
-        return Objects.equals(this.id, servicioDTO.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.id);
-    }
-
-    // prettier-ignore
+  // prettier-ignore
     @Override
     public String toString() {
         return "ServicioDTO{" +

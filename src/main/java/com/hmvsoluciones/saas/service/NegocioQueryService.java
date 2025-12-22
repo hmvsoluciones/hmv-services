@@ -25,62 +25,62 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class NegocioQueryService extends QueryService<Negocio> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(NegocioQueryService.class);
+  private static final Logger LOG = LoggerFactory.getLogger(NegocioQueryService.class);
 
-    private final NegocioRepository negocioRepository;
+  private final NegocioRepository negocioRepository;
 
-    private final NegocioMapper negocioMapper;
+  private final NegocioMapper negocioMapper;
 
-    public NegocioQueryService(NegocioRepository negocioRepository, NegocioMapper negocioMapper) {
-        this.negocioRepository = negocioRepository;
-        this.negocioMapper = negocioMapper;
+  public NegocioQueryService(NegocioRepository negocioRepository, NegocioMapper negocioMapper) {
+    this.negocioRepository = negocioRepository;
+    this.negocioMapper = negocioMapper;
+  }
+
+  /**
+   * Return a {@link Page} of {@link NegocioDTO} which matches the criteria from the database.
+   * @param criteria The object which holds all the filters, which the entities should match.
+   * @param page The page, which should be returned.
+   * @return the matching entities.
+   */
+  @Transactional(readOnly = true)
+  public Page<NegocioDTO> findByCriteria(NegocioCriteria criteria, Pageable page) {
+    LOG.debug("find by criteria : {}, page: {}", criteria, page);
+    final Specification<Negocio> specification = createSpecification(criteria);
+    return negocioRepository.findAll(specification, page).map(negocioMapper::toDto);
+  }
+
+  /**
+   * Return the number of matching entities in the database.
+   * @param criteria The object which holds all the filters, which the entities should match.
+   * @return the number of matching entities.
+   */
+  @Transactional(readOnly = true)
+  public long countByCriteria(NegocioCriteria criteria) {
+    LOG.debug("count by criteria : {}", criteria);
+    final Specification<Negocio> specification = createSpecification(criteria);
+    return negocioRepository.count(specification);
+  }
+
+  /**
+   * Function to convert {@link NegocioCriteria} to a {@link Specification}
+   * @param criteria The object which holds all the filters, which the entities should match.
+   * @return the matching {@link Specification} of the entity.
+   */
+  protected Specification<Negocio> createSpecification(NegocioCriteria criteria) {
+    Specification<Negocio> specification = Specification.where(null);
+    if (criteria != null) {
+      // This has to be called first, because the distinct method returns null
+      specification = Specification.allOf(
+        Boolean.TRUE.equals(criteria.getDistinct()) ? distinct(criteria.getDistinct()) : null,
+        buildRangeSpecification(criteria.getId(), Negocio_.id),
+        buildStringSpecification(criteria.getNombre(), Negocio_.nombre),
+        buildStringSpecification(criteria.getResponsable(), Negocio_.responsable),
+        buildStringSpecification(criteria.getCelular(), Negocio_.celular),
+        buildStringSpecification(criteria.getCorreo(), Negocio_.correo),
+        buildStringSpecification(criteria.getSubscriptionKey(), Negocio_.subscriptionKey),
+        buildSpecification(criteria.getEsActivo(), Negocio_.esActivo)
+      );
     }
-
-    /**
-     * Return a {@link Page} of {@link NegocioDTO} which matches the criteria from the database.
-     * @param criteria The object which holds all the filters, which the entities should match.
-     * @param page The page, which should be returned.
-     * @return the matching entities.
-     */
-    @Transactional(readOnly = true)
-    public Page<NegocioDTO> findByCriteria(NegocioCriteria criteria, Pageable page) {
-        LOG.debug("find by criteria : {}, page: {}", criteria, page);
-        final Specification<Negocio> specification = createSpecification(criteria);
-        return negocioRepository.findAll(specification, page).map(negocioMapper::toDto);
-    }
-
-    /**
-     * Return the number of matching entities in the database.
-     * @param criteria The object which holds all the filters, which the entities should match.
-     * @return the number of matching entities.
-     */
-    @Transactional(readOnly = true)
-    public long countByCriteria(NegocioCriteria criteria) {
-        LOG.debug("count by criteria : {}", criteria);
-        final Specification<Negocio> specification = createSpecification(criteria);
-        return negocioRepository.count(specification);
-    }
-
-    /**
-     * Function to convert {@link NegocioCriteria} to a {@link Specification}
-     * @param criteria The object which holds all the filters, which the entities should match.
-     * @return the matching {@link Specification} of the entity.
-     */
-    protected Specification<Negocio> createSpecification(NegocioCriteria criteria) {
-        Specification<Negocio> specification = Specification.where(null);
-        if (criteria != null) {
-            // This has to be called first, because the distinct method returns null
-            specification = Specification.allOf(
-                Boolean.TRUE.equals(criteria.getDistinct()) ? distinct(criteria.getDistinct()) : null,
-                buildRangeSpecification(criteria.getId(), Negocio_.id),
-                buildStringSpecification(criteria.getNombre(), Negocio_.nombre),
-                buildStringSpecification(criteria.getResponsable(), Negocio_.responsable),
-                buildStringSpecification(criteria.getCelular(), Negocio_.celular),
-                buildStringSpecification(criteria.getCorreo(), Negocio_.correo),
-                buildStringSpecification(criteria.getSubscriptionKey(), Negocio_.subscriptionKey),
-                buildSpecification(criteria.getEsActivo(), Negocio_.esActivo)
-            );
-        }
-        return specification;
-    }
+    return specification;
+  }
 }

@@ -8,17 +8,17 @@ import org.junit.jupiter.api.Test;
 
 class ServicioMapperTest {
 
-    private ServicioMapper servicioMapper;
+  private ServicioMapper servicioMapper;
 
-    @BeforeEach
-    void setUp() {
-        servicioMapper = new ServicioMapperImpl();
-    }
+  @BeforeEach
+  void setUp() {
+    servicioMapper = new ServicioMapperImpl();
+  }
 
-    @Test
-    void shouldConvertToDtoAndBack() {
-        var expected = getServicioSample1();
-        var actual = servicioMapper.toEntity(servicioMapper.toDto(expected));
-        assertServicioAllPropertiesEquals(expected, actual);
-    }
+  @Test
+  void shouldConvertToDtoAndBack() {
+    var expected = getServicioSample1();
+    var actual = servicioMapper.toEntity(servicioMapper.toDto(expected));
+    assertServicioAllPropertiesEquals(expected, actual);
+  }
 }

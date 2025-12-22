@@ -8,17 +8,17 @@ import org.junit.jupiter.api.Test;
 
 class TemplateMapperTest {
 
-    private TemplateMapper templateMapper;
+  private TemplateMapper templateMapper;
 
-    @BeforeEach
-    void setUp() {
-        templateMapper = new TemplateMapperImpl();
-    }
+  @BeforeEach
+  void setUp() {
+    templateMapper = new TemplateMapperImpl();
+  }
 
-    @Test
-    void shouldConvertToDtoAndBack() {
-        var expected = getTemplateSample1();
-        var actual = templateMapper.toEntity(templateMapper.toDto(expected));
-        assertTemplateAllPropertiesEquals(expected, actual);
-    }
+  @Test
+  void shouldConvertToDtoAndBack() {
+    var expected = getTemplateSample1();
+    var actual = templateMapper.toEntity(templateMapper.toDto(expected));
+    assertTemplateAllPropertiesEquals(expected, actual);
+  }
 }

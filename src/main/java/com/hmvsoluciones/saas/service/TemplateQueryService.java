@@ -25,58 +25,58 @@ import tech.jhipster.service.QueryService;
 @Transactional(readOnly = true)
 public class TemplateQueryService extends QueryService<Template> {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TemplateQueryService.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TemplateQueryService.class);
 
-    private final TemplateRepository templateRepository;
+  private final TemplateRepository templateRepository;
 
-    private final TemplateMapper templateMapper;
+  private final TemplateMapper templateMapper;
 
-    public TemplateQueryService(TemplateRepository templateRepository, TemplateMapper templateMapper) {
-        this.templateRepository = templateRepository;
-        this.templateMapper = templateMapper;
+  public TemplateQueryService(TemplateRepository templateRepository, TemplateMapper templateMapper) {
+    this.templateRepository = templateRepository;
+    this.templateMapper = templateMapper;
+  }
+
+  /**
+   * Return a {@link Page} of {@link TemplateDTO} which matches the criteria from the database.
+   * @param criteria The object which holds all the filters, which the entities should match.
+   * @param page The page, which should be returned.
+   * @return the matching entities.
+   */
+  @Transactional(readOnly = true)
+  public Page<TemplateDTO> findByCriteria(TemplateCriteria criteria, Pageable page) {
+    LOG.debug("find by criteria : {}, page: {}", criteria, page);
+    final Specification<Template> specification = createSpecification(criteria);
+    return templateRepository.findAll(specification, page).map(templateMapper::toDto);
+  }
+
+  /**
+   * Return the number of matching entities in the database.
+   * @param criteria The object which holds all the filters, which the entities should match.
+   * @return the number of matching entities.
+   */
+  @Transactional(readOnly = true)
+  public long countByCriteria(TemplateCriteria criteria) {
+    LOG.debug("count by criteria : {}", criteria);
+    final Specification<Template> specification = createSpecification(criteria);
+    return templateRepository.count(specification);
+  }
+
+  /**
+   * Function to convert {@link TemplateCriteria} to a {@link Specification}
+   * @param criteria The object which holds all the filters, which the entities should match.
+   * @return the matching {@link Specification} of the entity.
+   */
+  protected Specification<Template> createSpecification(TemplateCriteria criteria) {
+    Specification<Template> specification = Specification.where(null);
+    if (criteria != null) {
+      // This has to be called first, because the distinct method returns null
+      specification = Specification.allOf(
+        Boolean.TRUE.equals(criteria.getDistinct()) ? distinct(criteria.getDistinct()) : null,
+        buildRangeSpecification(criteria.getId(), Template_.id),
+        buildStringSpecification(criteria.getNombre(), Template_.nombre),
+        buildSpecification(criteria.getActivo(), Template_.activo)
+      );
     }
-
-    /**
-     * Return a {@link Page} of {@link TemplateDTO} which matches the criteria from the database.
-     * @param criteria The object which holds all the filters, which the entities should match.
-     * @param page The page, which should be returned.
-     * @return the matching entities.
-     */
-    @Transactional(readOnly = true)
-    public Page<TemplateDTO> findByCriteria(TemplateCriteria criteria, Pageable page) {
-        LOG.debug("find by criteria : {}, page: {}", criteria, page);
-        final Specification<Template> specification = createSpecification(criteria);
-        return templateRepository.findAll(specification, page).map(templateMapper::toDto);
-    }
-
-    /**
-     * Return the number of matching entities in the database.
-     * @param criteria The object which holds all the filters, which the entities should match.
-     * @return the number of matching entities.
-     */
-    @Transactional(readOnly = true)
-    public long countByCriteria(TemplateCriteria criteria) {
-        LOG.debug("count by criteria : {}", criteria);
-        final Specification<Template> specification = createSpecification(criteria);
-        return templateRepository.count(specification);
-    }
-
-    /**
-     * Function to convert {@link TemplateCriteria} to a {@link Specification}
-     * @param criteria The object which holds all the filters, which the entities should match.
-     * @return the matching {@link Specification} of the entity.
-     */
-    protected Specification<Template> createSpecification(TemplateCriteria criteria) {
-        Specification<Template> specification = Specification.where(null);
-        if (criteria != null) {
-            // This has to be called first, because the distinct method returns null
-            specification = Specification.allOf(
-                Boolean.TRUE.equals(criteria.getDistinct()) ? distinct(criteria.getDistinct()) : null,
-                buildRangeSpecification(criteria.getId(), Template_.id),
-                buildStringSpecification(criteria.getNombre(), Template_.nombre),
-                buildSpecification(criteria.getActivo(), Template_.activo)
-            );
-        }
-        return specification;
-    }
+    return specification;
+  }
 }

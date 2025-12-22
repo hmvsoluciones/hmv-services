@@ -11,11 +11,11 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface ServicioMapper extends EntityMapper<ServicioDTO, Servicio> {
-    @Mapping(target = "cita", source = "cita", qualifiedByName = "citaId")
-    ServicioDTO toDto(Servicio s);
+  @Mapping(target = "cita", source = "cita", qualifiedByName = "citaId")
+  ServicioDTO toDto(Servicio s);
 
-    @Named("citaId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    CitaDTO toDtoCitaId(Cita cita);
+  @Named("citaId")
+  @BeanMapping(ignoreByDefault = true)
+  @Mapping(target = "id", source = "id")
+  CitaDTO toDtoCitaId(Cita cita);
 }

@@ -13,17 +13,17 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring")
 public interface CitaMapper extends EntityMapper<CitaDTO, Cita> {
-    @Mapping(target = "cliente", source = "cliente", qualifiedByName = "clienteId")
-    @Mapping(target = "empleado", source = "empleado", qualifiedByName = "empleadoId")
-    CitaDTO toDto(Cita s);
+  @Mapping(target = "cliente", source = "cliente", qualifiedByName = "clienteId")
+  @Mapping(target = "empleado", source = "empleado", qualifiedByName = "empleadoId")
+  CitaDTO toDto(Cita s);
 
-    @Named("clienteId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    ClienteDTO toDtoClienteId(Cliente cliente);
+  @Named("clienteId")
+  @BeanMapping(ignoreByDefault = true)
+  @Mapping(target = "id", source = "id")
+  ClienteDTO toDtoClienteId(Cliente cliente);
 
-    @Named("empleadoId")
-    @BeanMapping(ignoreByDefault = true)
-    @Mapping(target = "id", source = "id")
-    EmpleadoDTO toDtoEmpleadoId(Empleado empleado);
+  @Named("empleadoId")
+  @BeanMapping(ignoreByDefault = true)
+  @Mapping(target = "id", source = "id")
+  EmpleadoDTO toDtoEmpleadoId(Empleado empleado);
 }

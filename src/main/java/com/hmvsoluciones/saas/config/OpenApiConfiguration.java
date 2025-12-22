@@ -13,20 +13,17 @@ import tech.jhipster.config.apidoc.customizer.JHipsterOpenApiCustomizer;
 @Profile(JHipsterConstants.SPRING_PROFILE_API_DOCS)
 public class OpenApiConfiguration {
 
-    public static final String API_FIRST_PACKAGE = "com.hmvsoluciones.saas.web.api";
+  public static final String API_FIRST_PACKAGE = "com.hmvsoluciones.saas.web.api";
 
-    @Bean
-    @ConditionalOnMissingBean(name = "apiFirstGroupedOpenAPI")
-    public GroupedOpenApi apiFirstGroupedOpenAPI(
-        JHipsterOpenApiCustomizer jhipsterOpenApiCustomizer,
-        JHipsterProperties jHipsterProperties
-    ) {
-        JHipsterProperties.ApiDocs properties = jHipsterProperties.getApiDocs();
-        return GroupedOpenApi.builder()
-            .group("openapi")
-            .addOpenApiCustomizer(jhipsterOpenApiCustomizer)
-            .packagesToScan(API_FIRST_PACKAGE)
-            .pathsToMatch(properties.getDefaultIncludePattern())
-            .build();
-    }
+  @Bean
+  @ConditionalOnMissingBean(name = "apiFirstGroupedOpenAPI")
+  public GroupedOpenApi apiFirstGroupedOpenAPI(JHipsterOpenApiCustomizer jhipsterOpenApiCustomizer, JHipsterProperties jHipsterProperties) {
+    JHipsterProperties.ApiDocs properties = jHipsterProperties.getApiDocs();
+    return GroupedOpenApi.builder()
+      .group("openapi")
+      .addOpenApiCustomizer(jhipsterOpenApiCustomizer)
+      .packagesToScan(API_FIRST_PACKAGE)
+      .pathsToMatch(properties.getDefaultIncludePattern())
+      .build();
+  }
 }

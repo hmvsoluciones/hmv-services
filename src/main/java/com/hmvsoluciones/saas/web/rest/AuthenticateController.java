@@ -36,76 +36,76 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 public class AuthenticateController {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AuthenticateController.class);
+  private static final Logger LOG = LoggerFactory.getLogger(AuthenticateController.class);
 
-    private final JwtEncoder jwtEncoder;
+  private final JwtEncoder jwtEncoder;
 
-    @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds:0}")
-    private long tokenValidityInSeconds;
+  @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds:0}")
+  private long tokenValidityInSeconds;
 
-    @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds-for-remember-me:0}")
-    private long tokenValidityInSecondsForRememberMe;
+  @Value("${jhipster.security.authentication.jwt.token-validity-in-seconds-for-remember-me:0}")
+  private long tokenValidityInSecondsForRememberMe;
 
-    private final AuthenticationManagerBuilder authenticationManagerBuilder;
+  private final AuthenticationManagerBuilder authenticationManagerBuilder;
 
-    public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder) {
-        this.jwtEncoder = jwtEncoder;
-        this.authenticationManagerBuilder = authenticationManagerBuilder;
+  public AuthenticateController(JwtEncoder jwtEncoder, AuthenticationManagerBuilder authenticationManagerBuilder) {
+    this.jwtEncoder = jwtEncoder;
+    this.authenticationManagerBuilder = authenticationManagerBuilder;
+  }
+
+  @PostMapping("/authenticate")
+  public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
+    UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
+      loginVM.getUsername(),
+      loginVM.getPassword()
+    );
+
+    Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
+    SecurityContextHolder.getContext().setAuthentication(authentication);
+    String jwt = this.createToken(authentication, loginVM.isRememberMe());
+    HttpHeaders httpHeaders = new HttpHeaders();
+    httpHeaders.setBearerAuth(jwt);
+    return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
+  }
+
+  /**
+   * {@code GET /authenticate} : check if the user is authenticated.
+   *
+   * @return the {@link ResponseEntity} with status {@code 204 (No Content)},
+   * or with status {@code 401 (Unauthorized)} if not authenticated.
+   */
+  @GetMapping("/authenticate")
+  public ResponseEntity<Void> isAuthenticated(Principal principal) {
+    LOG.debug("REST request to check if the current user is authenticated");
+    return ResponseEntity.status(principal == null ? HttpStatus.UNAUTHORIZED : HttpStatus.NO_CONTENT).build();
+  }
+
+  public String createToken(Authentication authentication, boolean rememberMe) {
+    String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
+
+    Instant now = Instant.now();
+    Instant validity;
+    if (rememberMe) {
+      validity = now.plus(this.tokenValidityInSecondsForRememberMe, ChronoUnit.SECONDS);
+    } else {
+      validity = now.plus(this.tokenValidityInSeconds, ChronoUnit.SECONDS);
     }
 
-    @PostMapping("/authenticate")
-    public ResponseEntity<JWTToken> authorize(@Valid @RequestBody LoginVM loginVM) {
-        UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(
-            loginVM.getUsername(),
-            loginVM.getPassword()
-        );
-
-        Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String jwt = this.createToken(authentication, loginVM.isRememberMe());
-        HttpHeaders httpHeaders = new HttpHeaders();
-        httpHeaders.setBearerAuth(jwt);
-        return new ResponseEntity<>(new JWTToken(jwt), httpHeaders, HttpStatus.OK);
-    }
-
-    /**
-     * {@code GET /authenticate} : check if the user is authenticated.
-     *
-     * @return the {@link ResponseEntity} with status {@code 204 (No Content)},
-     * or with status {@code 401 (Unauthorized)} if not authenticated.
-     */
-    @GetMapping("/authenticate")
-    public ResponseEntity<Void> isAuthenticated(Principal principal) {
-        LOG.debug("REST request to check if the current user is authenticated");
-        return ResponseEntity.status(principal == null ? HttpStatus.UNAUTHORIZED : HttpStatus.NO_CONTENT).build();
-    }
-
-    public String createToken(Authentication authentication, boolean rememberMe) {
-        String authorities = authentication.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.joining(" "));
-
-        Instant now = Instant.now();
-        Instant validity;
-        if (rememberMe) {
-            validity = now.plus(this.tokenValidityInSecondsForRememberMe, ChronoUnit.SECONDS);
-        } else {
-            validity = now.plus(this.tokenValidityInSeconds, ChronoUnit.SECONDS);
-        }
-
-        // @formatter:off
+    // @formatter:off
         JwtClaimsSet.Builder builder = JwtClaimsSet.builder()
             .issuedAt(now)
             .expiresAt(validity)
             .subject(authentication.getName())
             .claim(AUTHORITIES_CLAIM, authorities);
-        if (authentication.getPrincipal() instanceof UserWithId user) {
+    if (authentication.getPrincipal() instanceof UserWithId user) {
             builder.claim(USER_ID_CLAIM, user.getId());
         }
 
-        JwsHeader jwsHeader = JwsHeader.with(JWT_ALGORITHM).build();
-        return this.jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, builder.build())).getTokenValue();
-    }
+    JwsHeader jwsHeader = JwsHeader.with(JWT_ALGORITHM).build();
+    return this.jwtEncoder.encode(JwtEncoderParameters.from(jwsHeader, builder.build())).getTokenValue();
+  }
 
-    /**
+  /**
      * Object to return as body in JWT Authentication.
      */
     static class JWTToken {

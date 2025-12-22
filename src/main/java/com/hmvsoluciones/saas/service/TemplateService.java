@@ -17,82 +17,82 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public class TemplateService {
 
-    private static final Logger LOG = LoggerFactory.getLogger(TemplateService.class);
+  private static final Logger LOG = LoggerFactory.getLogger(TemplateService.class);
 
-    private final TemplateRepository templateRepository;
+  private final TemplateRepository templateRepository;
 
-    private final TemplateMapper templateMapper;
+  private final TemplateMapper templateMapper;
 
-    public TemplateService(TemplateRepository templateRepository, TemplateMapper templateMapper) {
-        this.templateRepository = templateRepository;
-        this.templateMapper = templateMapper;
-    }
+  public TemplateService(TemplateRepository templateRepository, TemplateMapper templateMapper) {
+    this.templateRepository = templateRepository;
+    this.templateMapper = templateMapper;
+  }
 
-    /**
-     * Save a template.
-     *
-     * @param templateDTO the entity to save.
-     * @return the persisted entity.
-     */
-    public TemplateDTO save(TemplateDTO templateDTO) {
-        LOG.debug("Request to save Template : {}", templateDTO);
-        Template template = templateMapper.toEntity(templateDTO);
-        template = templateRepository.save(template);
-        return templateMapper.toDto(template);
-    }
+  /**
+   * Save a template.
+   *
+   * @param templateDTO the entity to save.
+   * @return the persisted entity.
+   */
+  public TemplateDTO save(TemplateDTO templateDTO) {
+    LOG.debug("Request to save Template : {}", templateDTO);
+    Template template = templateMapper.toEntity(templateDTO);
+    template = templateRepository.save(template);
+    return templateMapper.toDto(template);
+  }
 
-    /**
-     * Update a template.
-     *
-     * @param templateDTO the entity to save.
-     * @return the persisted entity.
-     */
-    public TemplateDTO update(TemplateDTO templateDTO) {
-        LOG.debug("Request to update Template : {}", templateDTO);
-        Template template = templateMapper.toEntity(templateDTO);
-        template = templateRepository.save(template);
-        return templateMapper.toDto(template);
-    }
+  /**
+   * Update a template.
+   *
+   * @param templateDTO the entity to save.
+   * @return the persisted entity.
+   */
+  public TemplateDTO update(TemplateDTO templateDTO) {
+    LOG.debug("Request to update Template : {}", templateDTO);
+    Template template = templateMapper.toEntity(templateDTO);
+    template = templateRepository.save(template);
+    return templateMapper.toDto(template);
+  }
 
-    /**
-     * Partially update a template.
-     *
-     * @param templateDTO the entity to update partially.
-     * @return the persisted entity.
-     */
-    public Optional<TemplateDTO> partialUpdate(TemplateDTO templateDTO) {
-        LOG.debug("Request to partially update Template : {}", templateDTO);
+  /**
+   * Partially update a template.
+   *
+   * @param templateDTO the entity to update partially.
+   * @return the persisted entity.
+   */
+  public Optional<TemplateDTO> partialUpdate(TemplateDTO templateDTO) {
+    LOG.debug("Request to partially update Template : {}", templateDTO);
 
-        return templateRepository
-            .findById(templateDTO.getId())
-            .map(existingTemplate -> {
-                templateMapper.partialUpdate(existingTemplate, templateDTO);
+    return templateRepository
+      .findById(templateDTO.getId())
+      .map(existingTemplate -> {
+        templateMapper.partialUpdate(existingTemplate, templateDTO);
 
-                return existingTemplate;
-            })
-            .map(templateRepository::save)
-            .map(templateMapper::toDto);
-    }
+        return existingTemplate;
+      })
+      .map(templateRepository::save)
+      .map(templateMapper::toDto);
+  }
 
-    /**
-     * Get one template by id.
-     *
-     * @param id the id of the entity.
-     * @return the entity.
-     */
-    @Transactional(readOnly = true)
-    public Optional<TemplateDTO> findOne(Long id) {
-        LOG.debug("Request to get Template : {}", id);
-        return templateRepository.findById(id).map(templateMapper::toDto);
-    }
+  /**
+   * Get one template by id.
+   *
+   * @param id the id of the entity.
+   * @return the entity.
+   */
+  @Transactional(readOnly = true)
+  public Optional<TemplateDTO> findOne(Long id) {
+    LOG.debug("Request to get Template : {}", id);
+    return templateRepository.findById(id).map(templateMapper::toDto);
+  }
 
-    /**
-     * Delete the template by id.
-     *
-     * @param id the id of the entity.
-     */
-    public void delete(Long id) {
-        LOG.debug("Request to delete Template : {}", id);
-        templateRepository.deleteById(id);
-    }
+  /**
+   * Delete the template by id.
+   *
+   * @param id the id of the entity.
+   */
+  public void delete(Long id) {
+    LOG.debug("Request to delete Template : {}", id);
+    templateRepository.deleteById(id);
+  }
 }
